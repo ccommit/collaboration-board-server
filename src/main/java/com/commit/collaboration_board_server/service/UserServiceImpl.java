@@ -2,6 +2,8 @@ package com.commit.collaboration_board_server.service;
 
 import com.commit.collaboration_board_server.mapper.UserMapper;
 import com.commit.collaboration_board_server.model.User;
+import com.commit.collaboration_board_server.util.SessionUtil;
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -48,5 +50,19 @@ public class UserServiceImpl implements UserService {
         return userMapper.findByUserId(userId);
     }
 
+    @Override
+    public boolean authenticate(User loginRequest) {
+        User user = userMapper.findByUserId(loginRequest.getUserId());
+        return user != null && user.getPassword().equals(loginRequest.getPassword());
+    }
 
+    @Override
+    public void saveUserSession(HttpServletRequest request, User loginRequest) {
+        SessionUtil.saveLoggedInUser(request, loginRequest);
+    }
+
+    @Override
+    public void removeUserSession(HttpServletRequest request) {
+        SessionUtil.invalidateSession(request);
+    }
 }
