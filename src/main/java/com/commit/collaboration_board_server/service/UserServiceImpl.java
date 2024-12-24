@@ -4,6 +4,7 @@ import com.commit.collaboration_board_server.mapper.UserMapper;
 import com.commit.collaboration_board_server.model.User;
 import com.commit.collaboration_board_server.util.SessionUtil;
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -57,8 +58,8 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void saveUserSession(HttpServletRequest request, User loginRequest) {
-        SessionUtil.saveLoggedInUser(request, loginRequest);
+    public void saveUserSession(HttpSession session, User loginRequest) {
+        SessionUtil.saveLoggedInUser(session, loginRequest);
     }
 
     @Override

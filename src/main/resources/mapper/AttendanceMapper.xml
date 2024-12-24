@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.commit.collaboration_board_server.mapper.AttendanceMapper">
+
+
+
+    <!-- 월간 근로 시간 조회 -->
+    <select id="getMonthlyWorkHours" resultType="int">
+        SELECT SUM(dwd.work_time)
+        FROM DAILY_WORK_DATE dwd
+        JOIN USER u ON dwd.user_id = u.user_id
+        WHERE dwd.user_id = #{userId}
+        AND DATE_FORMAT(dwd.work_date, '%Y-%m') = #{date}
+    </select>
+
+    <!-- 코어타임 위반 횟수 조회 -->
+    <select id="getCoreTimeViolations" resultType="int">
+        SELECT COUNT(*)
+        FROM ATTENDANCE_OPERATION ao
+        JOIN USER u ON ao.user_id = u.user_id
+        WHERE ao.user_id = #{userId}
+        AND DATE_FORMAT(ao.work_core_time, '%Y-%m') = #{date}
+        AND ao.position_level_vacation > 0
+    </select>
+
+</mapper>
