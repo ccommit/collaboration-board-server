@@ -6,13 +6,10 @@ import jakarta.servlet.http.HttpSession;
 
 public final class SessionUtil {
 
-    // 세션에 사용자 저장
-    public static void saveLoggedInUser(HttpServletRequest request, User user) {
-        HttpSession session = request.getSession();
+    public static void saveLoggedInUser(HttpSession  session , User user) {
         session.setAttribute("loggedInUser", user);
     }
 
-    // 세션에서 사용자 제거
     public static void invalidateSession(HttpServletRequest request) {
         HttpSession session = request.getSession(false);
         if (session != null) {
@@ -20,9 +17,7 @@ public final class SessionUtil {
         }
     }
 
-    // 세션에서 사용자 조회
-    public static User getLoggedInUser(HttpServletRequest request) {
-        HttpSession session = request.getSession(false);
+    public static User getLoggedInUser(HttpSession session) {
         return (session != null) ? (User) session.getAttribute("loggedInUser") : null;
     }
 }
