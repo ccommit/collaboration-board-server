@@ -20,11 +20,11 @@
     <update id="updateUser" parameterType="com.commit.collaboration_board_server.model.User">
         UPDATE USER
         SET user_id = #{userId},
-        username = #{username},
-        password = #{password},
-        phone_number = #{phoneNumber},
-        email = #{email},
-        role = #{role}
+            username = #{username},
+            password = #{password},
+            phone_number = #{phoneNumber},
+            email = #{email},
+            role = #{role}
         WHERE id = #{id}
     </update>
 

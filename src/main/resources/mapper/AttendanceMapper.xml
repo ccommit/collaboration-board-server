@@ -4,6 +4,26 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.commit.collaboration_board_server.mapper.AttendanceMapper">
 
+    <!-- 일간 출석 체크 -->
+    <insert id="insertAttendance" parameterType="com.commit.collaboration_board_server.model.Attendance">
+        INSERT INTO DAILY_WORK_DATE (id, user_id, work_date, work_start_time, work_end_time, work_time)
+        VALUES (#{id}, #{userId}, #{workDate}, #{workStartTime}, #{workEndTime}, #{workTime})
+    </insert>
+
+    <!-- 일간 퇴근 체크 -->
+    <update id="updateWorkEndTime" parameterType="com.commit.collaboration_board_server.model.Attendance">
+        UPDATE DAILY_WORK_DATE
+        SET work_end_time = #{workEndTime}
+        WHERE id = #{id}
+    </update>
+
+
+    <!-- 일간 코어타임 위반 체크 -->
+    <insert id="insertAttendanceOperation" parameterType="map">
+        INSERT INTO ATTENACE_OPERATION (user_id, work_core_time, penalty_message, penalty_count)
+        VALUES (#{userId}, #{workCoreTime}, #{penaltyMessage}, 1)
+    </insert>
+
 
 
     <!-- 월간 근로 시간 조회 -->
