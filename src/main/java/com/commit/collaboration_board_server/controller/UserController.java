@@ -3,11 +3,11 @@ package com.commit.collaboration_board_server.controller;
 import com.commit.collaboration_board_server.model.User;
 import com.commit.collaboration_board_server.service.UserService;
 import com.commit.collaboration_board_server.util.ResponseStatusUtil;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import jakarta.servlet.http.HttpServletRequest;
 
 import java.util.List;
 
@@ -28,17 +28,17 @@ public class UserController {
         boolean isAuthenticated = userService.authenticate(loginRequest);
 
         if (!isAuthenticated) {
-            return ResponseEntity.status(ResponseStatusUtil.UNAUTHORIZED).body("Invalid userId or password.");
+            return ResponseEntity.status(ResponseStatusUtil.getStatus("UNAUTHORIZED")).body("Invalid userId or password.");
         }
 
         userService.saveUserSession(session, loginRequest);
-        return ResponseEntity.status(ResponseStatusUtil.SUCCESS).body("Login successful.");
+        return ResponseEntity.status(ResponseStatusUtil.getStatus("SUCCESS")).body("Login successful.");
     }
 
     @PostMapping("/logout")
     public ResponseEntity<String> logout(HttpServletRequest request) {
         userService.removeUserSession(request);
-        return ResponseEntity.status(ResponseStatusUtil.SUCCESS).body("Logout successful.");
+        return ResponseEntity.status(ResponseStatusUtil.getStatus("SUCCESS")).body("Logout successful.");
     }
 
     // 모든 사용자 조회
