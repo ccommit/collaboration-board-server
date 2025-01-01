@@ -12,6 +12,8 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
+import java.lang.reflect.Method;
+
 @Component
 @Aspect
 public class UserAspect {
@@ -28,6 +30,11 @@ public class UserAspect {
             throw new IllegalStateException("로그인이 필요합니다.");
         }
 
+
+        // @CheckLoginStatus 어노테이션 정보 가져오기
+        Method method = getMethodFromJoinPoint();
+        CheckLoginStatus annotation = method.getAnnotation(CheckLoginStatus.class);
+
         HttpServletRequest request = attributes.getRequest();
         HttpSession session = (HttpSession) request.getSession(false);
 
@@ -39,5 +46,10 @@ public class UserAspect {
         }
 
         logger.info("User '{}' is authenticated.", loggedInUser.getUserId());
+    }
+
+    private Method getMethodFromJoinPoint() {
+        // 실제 구현에서는 JoinPoint를 이용하여 메서드 정보를 얻을 수 있음
+        return null;
     }
 }

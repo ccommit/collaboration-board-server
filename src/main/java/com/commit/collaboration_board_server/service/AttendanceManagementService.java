@@ -35,7 +35,7 @@ public class AttendanceManagementService {
             attendanceMapper.insertAttendanceOperation(attendance.getId(),attendance.getUserId(), "work_start_time", penaltyMessage);
         }
 
-        // 출퇴근 정보 저장
+        // 출근 정보 저장
         attendanceMapper.insertAttendance(attendance);
     }
 
