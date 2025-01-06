@@ -24,7 +24,15 @@ public class AttendanceManagementService {
         this.attendanceMapper = attendanceMapper;
     }
 
-    public void saveAttendanceOperation(Attendance attendance) {
+    public boolean saveAttendanceOperation(Attendance attendance) {
+        boolean isDuplicate = attendanceMapper.existsAttendanceByParams(attendance);
+        if (isDuplicate) {
+            // 중복된 데이터가 있음을 반환
+            return true;
+        }
+
+
+
         // 근무 시작 시간을 기준으로 코어타임에 근무했는지 확인
         String workStartTime = attendance.getWorkStartTime(); // 예: "2024-12-29 09:00:00"
         String penaltyMessage = "";
@@ -35,8 +43,10 @@ public class AttendanceManagementService {
             attendanceMapper.insertAttendanceOperation(attendance.getId(),attendance.getUserId(), "work_start_time", penaltyMessage);
         }
 
-        // 출근 정보 저장
+
+        // 새로운 출석 데이터가 있으면 저장
         attendanceMapper.insertAttendance(attendance);
+        return false;
     }
 
     // 근무 시작 시간이 코어타임(10:00~14:00) 안에 있는지 확인

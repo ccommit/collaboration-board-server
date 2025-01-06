@@ -24,7 +24,13 @@
         VALUES (#{userId}, #{workCoreTime}, #{penaltyMessage}, 1)
     </insert>
 
-
+    <!-- 중복 데이터 입력 체크 -->
+    <select id="existsAttendanceByParams" resultType="boolean">
+        SELECT COUNT(*) > 0
+        FROM DAILY_WORK_DATE
+        WHERE user_id = #{userId}
+        AND work_start_time = #{workStartTime}
+    </select>
 
     <!-- 월간 근로 시간 조회 -->
     <select id="getMonthlyWorkHours" resultType="int">
