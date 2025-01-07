@@ -1,6 +1,7 @@
 package com.commit.collaboration_board_server.service;
 
 import com.commit.collaboration_board_server.mapper.UserMapper;
+import com.commit.collaboration_board_server.model.MonthlyWorkDate;
 import com.commit.collaboration_board_server.model.User;
 import com.commit.collaboration_board_server.util.SessionUtil;
 import jakarta.servlet.http.HttpServletRequest;
@@ -66,4 +67,11 @@ public class UserServiceImpl implements UserService {
     public void removeUserSession(HttpServletRequest request) {
         SessionUtil.invalidateSession(request);
     }
+
+    @Override
+    public void createmonthly(MonthlyWorkDate monthlyWorkDate) {
+        userMapper.insertMonth(monthlyWorkDate);
+    }
+
+
 }

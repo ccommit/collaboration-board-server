@@ -1,6 +1,6 @@
 package com.commit.collaboration_board_server.controller;
 
-import com.commit.collaboration_board_server.model.User;
+import com.commit.collaboration_board_server.model.*;
 import com.commit.collaboration_board_server.service.UserService;
 import com.commit.collaboration_board_server.util.ResponseStatusUtil;
 import jakarta.servlet.http.HttpServletRequest;
@@ -21,6 +21,7 @@ public class UserController {
     public UserController(UserService userService) {
         this.userService = userService;
     }
+
 
 
     @PostMapping("/login")
@@ -71,4 +72,13 @@ public class UserController {
     public void deleteUser(@PathVariable Long id) {
         userService.deleteUser(id);
     }
+
+
+    @PostMapping("/monthly")
+    public void createmonthly(@RequestBody MonthlyWorkDate monthlyWorkDate) {
+        userService.createmonthly(monthlyWorkDate);
+    }
+
+
+
 }
