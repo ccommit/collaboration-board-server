@@ -18,6 +18,7 @@ public final class SessionUtil {
     }
 
     public static User getLoggedInUser(HttpSession session) {
+        HttpSession session = request.getSession(false);
         return (session != null) ? (User) session.getAttribute("loggedInUser") : null;
     }
 }
