@@ -20,26 +20,15 @@
     <update id="updateUser" parameterType="com.commit.collaboration_board_server.model.User">
         UPDATE USER
         SET user_id = #{userId},
-            username = #{username},
-            password = #{password},
-            phone_number = #{phoneNumber},
-            email = #{email},
-            role = #{role}
+        username = #{username},
+        password = #{password},
+        phone_number = #{phoneNumber},
+        email = #{email},
+        role = #{role}
         WHERE id = #{id}
     </update>
-
 
     <delete id="deleteUser" parameterType="Long">
         DELETE FROM USER WHERE id = #{id}
     </delete>
-
-    <select id="findByUserId" parameterType="com.commit.collaboration_board_server.model.User">
-        SELECT * FROM USER WHERE user_id = #{userId}
-    </select>
-
-    <insert id="insertMonth" parameterType="com.commit.collaboration_board_server.model.User">
-        INSERT INTO monthly_work_date (id, user_id, total_work_time)
-        VALUES (#{id}, #{userId}, #{totalWorkTime})
-    </insert>
-
 </mapper>
