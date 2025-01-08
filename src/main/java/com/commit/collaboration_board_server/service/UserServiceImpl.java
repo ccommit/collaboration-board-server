@@ -1,7 +1,11 @@
 package com.commit.collaboration_board_server.service;
 
 import com.commit.collaboration_board_server.mapper.UserMapper;
+import com.commit.collaboration_board_server.model.MonthlyWorkDate;
 import com.commit.collaboration_board_server.model.User;
+import com.commit.collaboration_board_server.util.SessionUtil;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -41,4 +45,33 @@ public class UserServiceImpl implements UserService {
     public void deleteUser(Long id) {
         userMapper.deleteUser(id);
     }
+
+
+    @Override
+    public User findByUserId(String userId) {
+        return userMapper.findByUserId(userId);
+    }
+
+    @Override
+    public boolean authenticate(User loginRequest) {
+        User user = userMapper.findByUserId(loginRequest.getUserId());
+        return user != null && user.getPassword().equals(loginRequest.getPassword());
+    }
+
+    @Override
+    public void saveUserSession(HttpSession session, User loginRequest) {
+        SessionUtil.saveLoggedInUser(session, loginRequest);
+    }
+
+    @Override
+    public void removeUserSession(HttpServletRequest request) {
+        SessionUtil.invalidateSession(request);
+    }
+
+    @Override
+    public void createmonthly(MonthlyWorkDate monthlyWorkDate) {
+        userMapper.insertMonth(monthlyWorkDate);
+    }
+
+
 }

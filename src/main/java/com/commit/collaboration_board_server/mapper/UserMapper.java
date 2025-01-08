@@ -1,5 +1,6 @@
 package com.commit.collaboration_board_server.mapper;
 
+import com.commit.collaboration_board_server.model.MonthlyWorkDate;
 import com.commit.collaboration_board_server.model.User;
 import org.apache.ibatis.annotations.*;
 
@@ -12,4 +13,6 @@ public interface UserMapper {
     void insertUser(User user);
     void updateUser(User user);
     void deleteUser(@Param("id") Long id);
+    User findByUserId(String userId);
+    void insertMonth(MonthlyWorkDate monthlyWorkDate);
 }
