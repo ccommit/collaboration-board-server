@@ -2,7 +2,7 @@
 네이버 웍스 같은 사내 게시판 협업 툴 서버
 
 # ERD
-https://user-images.githubusercontent.com/75170367/205051107-97f36259-f782-423d-a3cc-ca9ca6985b7b.png
+[화면 캡처 2025-01-08 203151](https://github.com/user-attachments/assets/8043f9c6-3254-49fe-9b03-940bb8d21ba9)
 
 # 기획서
 ### **1. 사용자 관리 (User Management)**

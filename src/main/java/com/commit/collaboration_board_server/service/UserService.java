@@ -2,6 +2,7 @@ package com.commit.collaboration_board_server.service;
 
 import com.commit.collaboration_board_server.model.User;
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
 
 import java.util.List;
 
@@ -13,6 +14,6 @@ public interface UserService {
     void deleteUser(Long id);
     User findByUserId(String userId);
     boolean authenticate(User loginRequest);
-    void saveUserSession(HttpServletRequest request, User loginRequest);
+    void saveUserSession(HttpSession request, User loginRequest);
     void removeUserSession(HttpServletRequest request);
 }

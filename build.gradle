@@ -27,7 +27,8 @@ dependencies {
 	implementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter:3.0.3'
 	implementation 'org.springframework.boot:spring-boot-starter-data-jdbc'
 	implementation 'org.springframework.boot:spring-boot-starter-web'
-	implementation 'jakarta.servlet:jakarta.servlet-api:5.0.0'
+	implementation 'org.springframework.boot:spring-boot-starter-aop'
+	implementation 'jakarta.servlet:jakarta.servlet-api:6.0.0' // Caused by: java.lang.ClassNotFoundException: jakarta.servlet.ServletInputStream 오류해결 20241224 kdong0712
 	runtimeOnly 'com.mysql:mysql-connector-j'
 	compileOnly 'org.projectlombok:lombok'
 	annotationProcessor 'org.projectlombok:lombok'
