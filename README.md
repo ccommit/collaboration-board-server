@@ -6,7 +6,7 @@
 
 
 # 기획서
-### **1. 사용자 관리 (User Management)**![Uploading collaborationBoardServer.png…]()
+### **1. 사용자 관리 (User Management)**
 
 
 - **로그인 및 인증**
