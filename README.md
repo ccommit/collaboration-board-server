@@ -2,10 +2,12 @@
 네이버 웍스 같은 사내 게시판 협업 툴 서버
 
 # ERD
-![collaboration_board_server](https://github.com/user-attachments/assets/8834ca4e-5871-40a7-8e68-9673d6f41236)
+![collaborationBoardServer](https://github.com/user-attachments/assets/56811ad8-41b3-4318-a4ea-d42dacf1c1b9)
+
 
 # 기획서
-### **1. 사용자 관리 (User Management)**
+### **1. 사용자 관리 (User Management)**![Uploading collaborationBoardServer.png…]()
+
 
 - **로그인 및 인증**
     - **기능**: 사용자 ID와 비밀번호를 통한 로그인 기능을 제공하여, 사용자의 정보와 권한에 따라 접근 권한을 관리합니다.
