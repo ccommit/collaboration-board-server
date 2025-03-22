@@ -1,6 +1,5 @@
 package com.commit.collaboration_board_server.service;
 
-import com.commit.collaboration_board_server.model.MonthlyWorkDate;
 import com.commit.collaboration_board_server.model.User;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
@@ -17,6 +16,4 @@ public interface UserService {
     boolean authenticate(User loginRequest);
     void saveUserSession(HttpSession request, User loginRequest);
     void removeUserSession(HttpServletRequest request);
-    void createmonthly(MonthlyWorkDate monthlyWorkDate);
-
 }

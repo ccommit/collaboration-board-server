@@ -11,8 +11,6 @@ import java.util.List;
 @Mapper
 public interface AttendanceMapper {
 
-    boolean existsAttendanceByParams(Attendance attendance);
-
     void insertAttendance(Attendance attendance);
 
     //코어타임 체크 하는 내용 추가
