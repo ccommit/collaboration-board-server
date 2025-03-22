@@ -6,16 +6,22 @@
 
     <!-- 일간 출석 체크 -->
     <insert id="insertAttendance" parameterType="com.commit.collaboration_board_server.model.Attendance">
-        INSERT INTO DAILY_WORK_DATE (id, user_id, work_date, work_start_time, work_end_time, work_time)
-        VALUES (#{id}, #{userId}, #{workDate}, #{workStartTime}, #{workEndTime}, #{workTime})
+        INSERT INTO dailyWorkDate (id, userId, startTime, endTime, workHour, workNotHour)
+        VALUES (#{id}, #{userId}, #{startTime}, #{endTime}, #{workHour}, #{workNotHour})
     </insert>
 
     <!-- 일간 퇴근 체크 -->
     <update id="updateWorkEndTime" parameterType="com.commit.collaboration_board_server.model.Attendance">
-        UPDATE DAILY_WORK_DATE
-        SET work_end_time = #{workEndTime}
+        UPDATE dailyWorkDate
+        SET endTime = #{endTime}
         WHERE id = #{id}
     </update>
+
+
+
+    <select id="getAllWorkDates" resultType="com.commit.collaboration_board_server.model.Attendance">
+        SELECT * FROM dailyworkdate
+    </select>
 
 
     <!-- 일간 코어타임 위반 체크 -->
@@ -24,18 +30,11 @@
         VALUES (#{userId}, #{workCoreTime}, #{penaltyMessage}, 1)
     </insert>
 
-    <!-- 중복 데이터 입력 체크 -->
-    <select id="existsAttendanceByParams" resultType="boolean">
-        SELECT COUNT(*) > 0
-        FROM DAILY_WORK_DATE
-        WHERE user_id = #{userId}
-        AND work_start_time = #{workStartTime}
-    </select>
 
     <!-- 월간 근로 시간 조회 -->
     <select id="getMonthlyWorkHours" resultType="int">
         SELECT SUM(dwd.work_time)
-        FROM DAILY_WORK_DATE dwd
+        FROM dailyWorkDate dwd
         JOIN USER u ON dwd.user_id = u.user_id
         WHERE dwd.user_id = #{userId}
         AND DATE_FORMAT(dwd.work_date, '%Y-%m') = #{date}
@@ -49,6 +48,14 @@
         WHERE ao.user_id = #{userId}
         AND DATE_FORMAT(ao.work_core_time, '%Y-%m') = #{date}
         AND ao.position_level_vacation > 0
+    </select>
+
+    <select id="existsAttendanceByParams" parameterType="com.commit.collaboration_board_server.model.Attendance" resultType="boolean">
+        SELECT COUNT(*)
+        FROM dailyWorkDate
+        WHERE userId = #{userId}
+        AND startTime = #{startTime}
+        AND endTime = #{endTime}
     </select>
 
 </mapper>

@@ -6,6 +6,7 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.Date;
+import java.util.List;
 
 @Mapper
 public interface AttendanceMapper {
@@ -27,5 +28,8 @@ public interface AttendanceMapper {
     int getCoreTimeViolations(@Param("userId") String userId, @Param("date") Date date);
 
 
-    void insertAttendanceOperation(String userId, String workStartTime, String penaltyMessage);
+    List<Attendance> getAllWorkDates();
+
+    void insertAttendanceOperation(String userId, String startTime, String penaltyMessage);
 }
+
