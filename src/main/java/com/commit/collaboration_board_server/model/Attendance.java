@@ -7,8 +7,13 @@ import lombok.Data;
 public class Attendance {
     private Long id;
     private String userId;
-    private String workDate;
-    private String workStartTime;
-    private String workEndTime;
-    private String workTime;
+    private String startTime;
+    private String endTime;
+    private String workHour;
+    private String workNotHour;
+
+
+    public String getWorkStartTime() {
+        return this.startTime;
+    }
 }

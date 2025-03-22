@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.commit.collaboration_board_server.mapper.ScheduleMapper">
+
+    <insert id="insertschedule" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO schedule (user_id, email, title, schedule_category, description, start_date, end_date, created_at, updated_at)
+        VALUES (#{userId}, #{invitedEmails}, #{title}, #{scheduleCategory}, #{description}, #{startDate}, #{endDate}, NOW(), NOW())
+    </insert>
+
+</mapper>
