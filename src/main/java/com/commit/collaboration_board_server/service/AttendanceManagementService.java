@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.time.LocalTime;
-import java.time.format.DateTimeFormatter;
+
 
 
 import java.util.Date;
@@ -34,14 +34,16 @@ public class AttendanceManagementService {
     public Integer saveAttendanceOperation(Attendance attendance) {
         boolean isDuplicate = attendanceMapper.existsAttendanceByParams(attendance);
         if (isDuplicate) {
-            // 중복된 데이터가 있음을 반환
-            return 10000;
+            return ResponseStatusUtil.CODES.keySet().stream()
+                    .filter(key -> "Dupulicated saveAttendanceOperation Exception".equals(ResponseStatusUtil.CODES.get(key)))
+                    .findFirst()
+                    .orElse(10000);
         }
 
 
 
         // 근무 시작 시간을 기준으로 코어타임에 근무했는지 확인
-        String startTime = attendance.getWorkStartTime(); // 예: "2024-12-29 09:00:00"
+        LocalDateTime startTime = attendance.getWorkStartTime(); // 예: "2024-12-29 09:00:00"
         String penaltyMessage = "";
 
         // 코어타임을 기준으로 근무 시작 시간이 10:00 ~ 14:00 사이에 있지 않으면
@@ -56,18 +58,15 @@ public class AttendanceManagementService {
     }
 
     // 근무 시작 시간이 코어타임(10:00~14:00) 안에 있는지 확인
-    private boolean isCoreTime(String startTime) {
+    private boolean isCoreTime(LocalDateTime startTime) {
         // 코어타임을 10:00~14:00으로 설정
         LocalTime coreTimeStart = LocalTime.of(10, 0); // 10:00
         LocalTime coreTimeEnd = LocalTime.of(14, 0);   // 14:00
 
-        // startTime을 LocalTime으로 변환
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.SSSSSS");
-        LocalDateTime dateTime = LocalDateTime.parse(startTime, formatter);
-        LocalTime starttime = dateTime.toLocalTime();
+        LocalTime startTimeOnly = startTime.toLocalTime();
 
         // startTime이 coreTimeStart와 coreTimeEnd 사이에 있는지 확인
-        return !starttime.isBefore(coreTimeStart) && !starttime.isAfter(coreTimeEnd);
+        return !startTimeOnly.isBefore(coreTimeStart) && !startTimeOnly.isAfter(coreTimeEnd);
     }
 
     public void updateWorkEndTime(Attendance attendance) {

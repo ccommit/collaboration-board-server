@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
+import java.util.Date;
 
 @Service
 public class EmailService {
@@ -27,7 +28,7 @@ public class EmailService {
         mailSender.send(message);
     }
 
-    public boolean isCoreTime(String startTime, String endTime) {
+    public static boolean isCoreTime(LocalDateTime startTime, LocalDateTime endTime) {
         // 코어 타임 시작 및 끝
         LocalTime coreStart = LocalTime.of(10, 0);  // 오전 10:00
         LocalTime coreEnd = LocalTime.of(14, 0);    // 오후 2:00
@@ -36,12 +37,9 @@ public class EmailService {
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"); // 시간 형식 지정 (년-월-일 시:분:초)
 
             // startTime과 endTime을 LocalDateTime으로 변환
-            LocalDateTime startDateTime = LocalDateTime.parse(startTime, formatter);
-            LocalDateTime endDateTime = LocalDateTime.parse(endTime, formatter);
+            LocalTime start = startTime.toLocalTime();
+            LocalTime end = endTime.toLocalTime();
 
-            // startTime과 endTime을 LocalTime으로 변환하여 비교
-            LocalTime start = startDateTime.toLocalTime();
-            LocalTime end = endDateTime.toLocalTime();
 
             // 코어 타임이 startTime과 endTime 사이에 완전히 포함되어 있지 않은 경우 true 반환
             // 즉, startTime이 coreStart보다 늦거나 endTime이 coreEnd보다 빠른 경우 true

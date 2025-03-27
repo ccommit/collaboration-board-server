@@ -29,5 +29,7 @@ public interface AttendanceMapper {
     List<Attendance> getAllWorkDates();
 
     void insertAttendanceOperation(String userId, String startTime, String penaltyMessage);
+
+    boolean existsAttendanceByParams(Attendance attendance);
 }
 

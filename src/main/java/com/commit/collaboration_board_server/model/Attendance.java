@@ -1,5 +1,6 @@
 package com.commit.collaboration_board_server.model;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 import lombok.Data;
 
@@ -7,13 +8,13 @@ import lombok.Data;
 public class Attendance {
     private Long id;
     private String userId;
-    private String startTime;
-    private String endTime;
-    private String workHour;
-    private String workNotHour;
+    private LocalDateTime startTime;
+    private LocalDateTime endTime;
+    private Double workHour;
+    private Double workNotHour;
 
 
-    public String getWorkStartTime() {
+    public LocalDateTime getWorkStartTime() {
         return this.startTime;
     }
 }

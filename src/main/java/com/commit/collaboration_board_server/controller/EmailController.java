@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @RestController
@@ -40,11 +41,11 @@ public class EmailController {
 
             for (Attendance workDate : allWorkDates) {
                 String userId = workDate.getUserId();
-                String startTime = workDate.getStartTime();
-                String endTime = workDate.getEndTime();
+                LocalDateTime startTime = workDate.getStartTime();
+                LocalDateTime endTime = workDate.getEndTime();
 
                 // startTime과 endTime 사이에 코어 타임이 포함되지 않으면 이메일을 보내는 로직
-                if (emailService.isCoreTime(startTime, endTime)) {
+                if (EmailService.isCoreTime(startTime, endTime)) {
                     User user = userService.findByUserId(userId);
                     if (user != null && user.getEmail() != null) {
                         emailService.sendEmail(user.getEmail(), subject, text);
