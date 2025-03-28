@@ -8,7 +8,7 @@ import lombok.Data;
 public class Attendance {
     private Long id;
     private String userId;
-    private LocalDateTime startTime;
+    private LocalDateTime startTime = LocalDateTime.now();
     private LocalDateTime endTime;
     private Double workHour;
     private Double workNotHour;

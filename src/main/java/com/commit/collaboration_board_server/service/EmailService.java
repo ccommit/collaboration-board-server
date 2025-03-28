@@ -34,13 +34,9 @@ public class EmailService {
         LocalTime coreEnd = LocalTime.of(14, 0);    // 오후 2:00
 
         try {
-            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"); // 시간 형식 지정 (년-월-일 시:분:초)
-
             // startTime과 endTime을 LocalDateTime으로 변환
             LocalTime start = startTime.toLocalTime();
             LocalTime end = endTime.toLocalTime();
-
-
             // 코어 타임이 startTime과 endTime 사이에 완전히 포함되어 있지 않은 경우 true 반환
             // 즉, startTime이 coreStart보다 늦거나 endTime이 coreEnd보다 빠른 경우 true
             return !(start.isBefore(coreStart) && end.isAfter(coreEnd));

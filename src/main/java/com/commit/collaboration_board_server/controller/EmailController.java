@@ -16,7 +16,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 @RestController
-@RequestMapping("/email")
+@RequestMapping("/emails")
 public class EmailController {
 
     private static final Logger logger = LoggerFactory.getLogger(EmailController.class);
