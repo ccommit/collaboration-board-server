@@ -6,9 +6,15 @@
 
     <!-- 일간 출석 체크 -->
     <insert id="insertAttendance" parameterType="com.commit.collaboration_board_server.model.Attendance">
-        INSERT INTO dailyWorkDate (id, userId, startTime, endTime, workHour, workNotHour)
-        VALUES (#{id}, #{userId}, #{startTime}, #{endTime}, #{workHour}, #{workNotHour})
+        INSERT INTO dailyWorkDate (userId, startTime, workHour, workNotHour)
+        VALUES (#{userId}, #{startTime}, #{workHour}, #{workNotHour})
     </insert>
+
+    <select id="existsUnfinishedAttendance" parameterType="string" resultType="boolean">
+        SELECT COUNT(*)
+        FROM dailyWorkDate
+        WHERE userId = #{userId} AND endTime IS NULL
+    </select>
 
     <!-- 일간 퇴근 체크 -->
     <update id="updateWorkEndTime" parameterType="com.commit.collaboration_board_server.model.Attendance">

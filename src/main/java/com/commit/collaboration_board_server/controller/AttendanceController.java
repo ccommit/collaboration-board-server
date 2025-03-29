@@ -3,11 +3,17 @@ package com.commit.collaboration_board_server.controller;
 import com.commit.collaboration_board_server.aspect.CheckLoginStatus;
 import com.commit.collaboration_board_server.aspect.UserType;
 import com.commit.collaboration_board_server.model.Attendance;
+import com.commit.collaboration_board_server.model.User;
 import com.commit.collaboration_board_server.service.AttendanceManagementService;
+import com.commit.collaboration_board_server.service.EmailService;
 import com.commit.collaboration_board_server.util.ResponseStatusUtil;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.time.LocalDateTime;
+import java.util.List;
 
 @RestController
 @RequestMapping("attendances")

@@ -6,5 +6,5 @@ import lombok.Data;
 public class MonthlyWorkDate {
     private Long id;
     private String userId;
-    private int totalWorkTime;
+    private Double totalWorkTime;
 }

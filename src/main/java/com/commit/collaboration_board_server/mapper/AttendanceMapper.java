@@ -31,5 +31,7 @@ public interface AttendanceMapper {
     void insertAttendanceOperation(String userId, String startTime, String penaltyMessage);
 
     boolean existsAttendanceByParams(Attendance attendance);
+
+    boolean existsUnfinishedAttendance(@Param("userId") String userId);
 }
 

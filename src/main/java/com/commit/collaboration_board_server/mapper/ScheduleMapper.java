@@ -26,4 +26,14 @@ public interface ScheduleMapper {
 
     @Select("SELECT * FROM monthly_work_date WHERE total_work_time < #{hours}")
     List<MonthlyWorkDate> findByTotalWorkTimeLessThan(int hours);
+
+
+    // 주간 일정 조회 (현재 시간 이후 일정)
+    @Select("SELECT * FROM schedule WHERE schedule_category = 'weekly' AND start_date > NOW()")
+    List<Schedule> getWeeklySchedules();
+
+    // 월간 일정 조회 (현재 시간 이후 일정)
+    @Select("SELECT * FROM schedule WHERE schedule_category = 'monthly' AND start_date > NOW()")
+    List<Schedule> getMonthlySchedules();
+
 }

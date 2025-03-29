@@ -1,7 +1,9 @@
 package com.commit.collaboration_board_server.service;
 
 import com.commit.collaboration_board_server.mapper.AttendanceMapper;
+import com.commit.collaboration_board_server.mapper.UserMapper;
 import com.commit.collaboration_board_server.model.Attendance;
+import com.commit.collaboration_board_server.model.User;
 import com.commit.collaboration_board_server.util.ResponseStatusUtil;
 import org.springframework.stereotype.Service;
 
@@ -21,10 +23,14 @@ import java.util.Map;
 public class AttendanceManagementService {
 
     private final AttendanceMapper attendanceMapper;
+    private final EmailService emailService;
+    private final UserMapper userMapper;
 
 
-    public AttendanceManagementService(AttendanceMapper attendanceMapper) {
+    public AttendanceManagementService(AttendanceMapper attendanceMapper, EmailService emailService, UserMapper userMapper) {
         this.attendanceMapper = attendanceMapper;
+        this.emailService = emailService;
+        this.userMapper = userMapper;
     }
 
     public List<Attendance> getAllWorkDates() {
@@ -44,16 +50,20 @@ public class AttendanceManagementService {
 
         // 근무 시작 시간을 기준으로 코어타임에 근무했는지 확인
         LocalDateTime startTime = attendance.getWorkStartTime(); // 예: "2024-12-29 09:00:00"
-        String penaltyMessage = "";
 
         // 코어타임을 기준으로 근무 시작 시간이 10:00 ~ 14:00 사이에 있지 않으면
         if (isCoreTime(startTime)) {
-            penaltyMessage = "Core time violation: worked outside core time (10:00 - 14:00)";
+            User user =  userMapper.findByUserId(attendance.getUserId());
+            String penaltyMessage = "Core time violation: worked outside core time (10:00 - 14:00)";
+            emailService.sendEmail(user.getEmail(), penaltyMessage, penaltyMessage);
+
         }
 
 
-        // 새로운 출석 데이터가 있으면 저장
-        attendanceMapper.insertAttendance(attendance);
+        // 퇴근하지 않으면 저장 안되게
+        boolean hasUnfinishedAttendance = attendanceMapper.existsUnfinishedAttendance(attendance.getUserId());
+        if (!hasUnfinishedAttendance)
+            attendanceMapper.insertAttendance(attendance);
         return ResponseStatusUtil.CODES_SUCCESS;
     }
 
@@ -70,6 +80,7 @@ public class AttendanceManagementService {
     }
 
     public void updateWorkEndTime(Attendance attendance) {
+        attendance.setEndTime(LocalDateTime.now());
         attendanceMapper.updateWorkEndTime(attendance);
     }
 
