@@ -1,6 +1,7 @@
 package com.commit.collaboration_board_server.mapper;
 
 import com.commit.collaboration_board_server.model.Attendance;
+import com.commit.collaboration_board_server.model.Schedule;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
@@ -13,10 +14,6 @@ public interface AttendanceMapper {
 
     void insertAttendance(Attendance attendance);
 
-    //코어타임 체크 하는 내용 추가
-    void insertAttendanceOperation(@Param("Id") Long Id, @Param("userId") String userId, @Param("workCoreTime") String workCoreTime,
-                                   @Param("penaltyMessage") String penaltyMessage);
-
     void updateWorkEndTime(Attendance attendance);
 
     // 월간 근로 시간 조회
@@ -28,10 +25,12 @@ public interface AttendanceMapper {
 
     List<Attendance> getAllWorkDates();
 
-    void insertAttendanceOperation(String userId, String startTime, String penaltyMessage);
-
     boolean existsAttendanceByParams(Attendance attendance);
 
     boolean existsUnfinishedAttendance(@Param("userId") String userId);
+
+    // 특정 regularType(일간, 주간, 월간)에 해당하는 일정 조회 (현재 시간 이후 일정만)
+
+
 }
 

@@ -30,12 +30,6 @@
     </select>
 
 
-    <!-- 일간 코어타임 위반 체크 -->
-    <insert id="insertAttendanceOperation" parameterType="map">
-        INSERT INTO ATTENACE_OPERATION (user_id, work_core_time, penalty_message, penalty_count)
-        VALUES (#{userId}, #{workCoreTime}, #{penaltyMessage}, 1)
-    </insert>
-
 
     <!-- 월간 근로 시간 조회 -->
     <select id="getMonthlyWorkHours" resultType="int">
