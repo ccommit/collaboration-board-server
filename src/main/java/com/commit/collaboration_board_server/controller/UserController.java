@@ -1,8 +1,6 @@
 package com.commit.collaboration_board_server.controller;
 
 import com.commit.collaboration_board_server.aspect.AdminOnly;
-import com.commit.collaboration_board_server.aspect.CheckLoginStatus;
-import com.commit.collaboration_board_server.aspect.UserType;
 import com.commit.collaboration_board_server.model.User;
 import com.commit.collaboration_board_server.service.UserService;
 import com.commit.collaboration_board_server.util.ResponseStatusUtil;
