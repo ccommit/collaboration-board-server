@@ -7,6 +7,11 @@ import org.apache.ibatis.annotations.Options;
 
 @Mapper
 public interface RoleMapper {
-    @Insert("INSERT INTO role (id,roleName, addVacationCount) VALUES (#{id},#{roleName}, #{addVacationCount})")
     void insertRole(Role role);
+
+    void updateRole(Role role);
+
+    void deleteRoleById(Long id);
+
+    Role getRoleById(Long id);
 }

@@ -32,9 +32,6 @@ public class AdminCheckAspect {
             throw new IllegalStateException("요청 정보가 없습니다. 로그인이 필요합니다.");
         }
 
-        // HttpServletRequest에서 세션 가져오기
-//        HttpServletRequest request = attributes.getRequest();
-//        jakarta.servlet.http.HttpSession session = request.getSession(false);
 
 
         HttpServletRequest request = attributes.getRequest();

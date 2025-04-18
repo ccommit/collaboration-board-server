@@ -14,7 +14,7 @@ public class RoleController {
 
     @PostMapping
     public String createRole(@RequestBody Role role) {
-        roleService.addRole(role);
+        roleService.insertRole(role);
         return "Role added successfully!";
     }
 }

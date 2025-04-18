@@ -12,8 +12,19 @@ public class RoleService {
 
     private final RoleMapper roleMapper;
 
-    @Transactional
-    public void addRole(Role role) {
+    public void insertRole(Role role) {
         roleMapper.insertRole(role);
     }
+
+    public Role getRoleById(Long id) {
+        return roleMapper.getRoleById(id);
+    }
+    public void updateRole(Role role) {
+        roleMapper.updateRole(role);
+    }
+    public void deleteRoleById(Long id) {
+        roleMapper.deleteRoleById(id);
+    }
+
+
 }
