@@ -3,11 +3,17 @@ package com.commit.collaboration_board_server.controller;
 import com.commit.collaboration_board_server.aspect.CheckLoginStatus;
 import com.commit.collaboration_board_server.aspect.UserType;
 import com.commit.collaboration_board_server.model.Attendance;
+import com.commit.collaboration_board_server.model.User;
 import com.commit.collaboration_board_server.service.AttendanceManagementService;
+import com.commit.collaboration_board_server.service.EmailService;
 import com.commit.collaboration_board_server.util.ResponseStatusUtil;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.time.LocalDateTime;
+import java.util.List;
 
 @RestController
 @RequestMapping("attendances")
@@ -30,12 +36,12 @@ public class AttendanceController {
     @CheckLoginStatus(userType = UserType.USER)
     @PostMapping("/start")
     public ResponseEntity<String> startUser(@RequestBody Attendance attendance) {
-        boolean isDuplicate = attendanceManagementService.saveAttendanceOperation(attendance);
-        if (isDuplicate) {
-            // 중복된 경우 400 상태와 메시지 반환
+        Integer statsCode = attendanceManagementService.saveAttendanceOperation(attendance);
+        if (statsCode != ResponseStatusUtil.CODES_SUCCESS) {
+
             return ResponseEntity
-                    .status(ResponseStatusUtil.getStatus("BAD_REQUEST"))
-                    .body("이미 출석체크했습니다.");
+                    .status(200)
+                    .body(ResponseStatusUtil.getCodes(statsCode));
         }
 
         // 정상적인 경우 200 상태와 성공 메시지 반환

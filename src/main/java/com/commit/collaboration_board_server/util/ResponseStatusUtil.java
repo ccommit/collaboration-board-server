@@ -17,11 +17,21 @@ public final class ResponseStatusUtil {
             "SERVICE_UNAVAILABLE", HttpStatus.SERVICE_UNAVAILABLE.value() // 503 Service Unavailable - 서비스 사용 불가
     );
 
+    public static final Map<Integer, String> CODES = Map.of(
+            10000,"Dupulicated saveAttendanceOperation Exception"
+    );
+
+    public static int CODES_SUCCESS = 0;
+
+
 
     private ResponseStatusUtil() {
     }
 
     public static Integer getStatus(String key) {
         return STATUS_CODES.get(key);
+    }
+    public static String getCodes(Integer key) {
+        return CODES.get(key);
     }
 }
