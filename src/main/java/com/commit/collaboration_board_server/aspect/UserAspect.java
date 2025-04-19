@@ -3,6 +3,7 @@ package com.commit.collaboration_board_server.aspect;
 import com.commit.collaboration_board_server.model.User;
 import com.commit.collaboration_board_server.util.SessionUtil;
 import jakarta.servlet.http.HttpServletRequest;
+import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
 import org.aspectj.lang.annotation.Pointcut;
@@ -11,7 +12,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
-import org.aspectj.lang.JoinPoint;
 
 @Component
 @Aspect
@@ -20,7 +20,19 @@ public class UserAspect {
     private static final Logger logger = LoggerFactory.getLogger(UserAspect.class);
 
     @Pointcut("@annotation(checkLoginStatus)")
-    public void checkLoginMethods(CheckLoginStatus checkLoginStatus) {}
+    public void checkLoginMethods(CheckLoginStatus checkLoginStatus) {
+        // This method is empty because it only serves as a pointcut definition.
+        // The @Pointcut method should only define the pointcut expression and not contain any logic or parameters other than those required for the pointcut.
+    }
+
+
+
+    public void checkAdminPrivileges(User loggedInUser) {
+        if (loggedInUser.getIsAdmin() == null || loggedInUser.getIsAdmin() != 1) {
+            logger.warn("User '{}' is not an admin. Access denied.", loggedInUser.getUserId());
+            throw new IllegalStateException("어드민만 접근 가능합니다.");
+        }
+    }
 
     @Before("checkLoginMethods(checkLoginStatus)")
     public void checkLoginStatus(JoinPoint joinPoint, CheckLoginStatus checkLoginStatus) {
@@ -50,8 +62,7 @@ public class UserAspect {
                 throw new IllegalStateException("어드민만 접근 가능합니다.");
             }
         }
-
-
-        logger.info("User '{}' is authenticated for {} access.", loggedInUser.getUserId(), requiredUserType);
+        // 어드민 여부 체크
+        checkAdminPrivileges(loggedInUser);
     }
 }
