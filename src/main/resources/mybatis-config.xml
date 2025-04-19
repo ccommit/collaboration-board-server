@@ -1,0 +1,3 @@
+<typeHandlers>
+    <typeHandler handler="com.commit.collaboration_board_server.typehandler.JsonTypeHandler" javaType="java.util.Map" jdbcType="VARCHAR"/>
+</typeHandlers>
