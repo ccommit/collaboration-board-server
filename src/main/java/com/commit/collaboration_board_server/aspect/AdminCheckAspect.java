@@ -51,10 +51,10 @@ public class AdminCheckAspect {
         }
         // 어드민 여부 체크 (Integer 타입으로 변경된 isAdmin 확인)
         if (loggedInUser.getIsAdmin() == null || loggedInUser.getIsAdmin() != 1) {
-            logger.warn("User '{}' is not an admin. Access denied.", loggedInUser.getUserId());
+            logger.warn("User '{}' is not an admin. Access denied.", loggedInUser.getUserNo());
             throw new IllegalStateException("어드민만 접근 가능합니다.");
         }
 
-        logger.info("Admin user '{}' is authenticated and authorized.", loggedInUser.getUserId());
+        logger.info("Admin user '{}' is authenticated and authorized.", loggedInUser.getUserNo());
     }
 }

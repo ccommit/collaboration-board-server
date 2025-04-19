@@ -14,5 +14,5 @@ public class Article {
     private Integer viewCount;
     private LocalDateTime modificateTime;
     private Integer likeCount;
-    private Integer userId;
+    private Integer userNo;
 }

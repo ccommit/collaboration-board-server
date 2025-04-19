@@ -17,17 +17,17 @@ public interface AttendanceMapper {
     void updateWorkEndTime(Attendance attendance);
 
     // 월간 근로 시간 조회
-    int getMonthlyWorkHours(@Param("userId") String userId, @Param("date") Date date);
+    int getMonthlyWorkHours(@Param("userNo") long userNo, @Param("date") Date date);
 
     // 코어타임 위반 횟수 조회
-    int getCoreTimeViolations(@Param("userId") String userId, @Param("date") Date date);
+    int getCoreTimeViolations(@Param("userNo") long userNo, @Param("date") Date date);
 
 
     List<Attendance> getAllWorkDates();
 
     boolean existsAttendanceByParams(Attendance attendance);
 
-    boolean existsUnfinishedAttendance(@Param("userId") String userId);
+    boolean existsUnfinishedAttendance(@Param("userNo") long userNo);
 
     // 특정 regularType(일간, 주간, 월간)에 해당하는 일정 조회 (현재 시간 이후 일정만)
 

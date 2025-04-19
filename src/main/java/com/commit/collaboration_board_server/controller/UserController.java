@@ -52,8 +52,8 @@ public class UserController {
 
     // 특정 사용자 조회
     @GetMapping("/{id}")
-    public User getUserById(@PathVariable Long id) {
-        return userService.getUserById(id);
+    public User getUserNo(@PathVariable Long id) {
+        return userService.getUserNo(id);
     }
 
     // 사용자 생성
@@ -67,7 +67,7 @@ public class UserController {
     // 사용자 수정
     @PutMapping("/{id}")
     public void updateUser(@PathVariable Long id, @RequestBody User user) {
-        user.setId(id);
+        user.setUserNo(id);
         userService.updateUser(user);
     }
 

@@ -12,5 +12,5 @@ public interface UserMapper {
     void insertUser(User user);
     void updateUser(User user);
     void deleteUser(@Param("id") Long id);
-    User findByUserId(String userId);
+    User findByUserId(Long userNo);
 }

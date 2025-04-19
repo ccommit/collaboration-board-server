@@ -46,12 +46,12 @@ public class UserAspect {
         // ADMIN 권한이 필요한 경우
         if (requiredUserType == UserType.ADMIN) {
             if (loggedInUser.getIsAdmin() == null || loggedInUser.getIsAdmin() != 1) {
-                logger.warn("User '{}' is not an admin. Access denied.", loggedInUser.getUserId());
+                logger.warn("User '{}' is not an admin. Access denied.", loggedInUser.getUserNo());
                 throw new IllegalStateException("어드민만 접근 가능합니다.");
             }
         }
 
 
-        logger.info("User '{}' is authenticated for {} access.", loggedInUser.getUserId(), requiredUserType);
+        logger.info("User '{}' is authenticated for {} access.", loggedInUser.getUserNo(), requiredUserType);
     }
 }

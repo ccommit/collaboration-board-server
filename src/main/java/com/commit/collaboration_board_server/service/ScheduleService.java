@@ -95,7 +95,7 @@ public class ScheduleService {
     public void updateSchedule(Long id, Schedule updatedschedule) {
         Schedule existingschedule = scheduleMapper.findScheduleById(id);
         if (existingschedule != null) {
-            updatedschedule.setId(id);
+            updatedschedule.setUserNo(id);
             scheduleMapper.updateSchedule(updatedschedule);
         }
     }

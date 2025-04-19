@@ -10,7 +10,7 @@ import java.util.List;
 @Setter
 public class Schedule {
     private Long id;
-    private Long userId; // DB와 맞추기 위해 String -> Long으로 변경
+    private Long userNo; // DB와 맞추기 위해 String -> Long으로 변경
     private List<String> invitedEmails;
     private String title;
     private Boolean isRegular;

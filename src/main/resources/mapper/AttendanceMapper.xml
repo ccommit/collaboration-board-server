@@ -6,14 +6,14 @@
 
     <!-- 일간 출석 체크 -->
     <insert id="insertAttendance" parameterType="com.commit.collaboration_board_server.model.Attendance">
-        INSERT INTO dailyWorkDate (userId, startTime, workHour, workNotHour)
-        VALUES (#{userId}, #{startTime}, #{workHour}, #{workNotHour})
+        INSERT INTO dailyWorkDate (userNo, startTime, workHour, workNotHour)
+        VALUES (#{userNo}, #{startTime}, #{workHour}, #{workNotHour})
     </insert>
 
-    <select id="existsUnfinishedAttendance" parameterType="string" resultType="boolean">
+    <select id="existsUnfinishedAttendance" parameterType="Long" resultType="boolean">
         SELECT COUNT(*)
         FROM dailyWorkDate
-        WHERE userId = #{userId} AND endTime IS NULL
+        WHERE userNo = #{userNo} AND endTime IS NULL
     </select>
 
     <!-- 일간 퇴근 체크 -->
@@ -36,7 +36,7 @@
         SELECT SUM(dwd.work_time)
         FROM dailyWorkDate dwd
         JOIN USER u ON dwd.user_id = u.user_id
-        WHERE dwd.user_id = #{userId}
+        WHERE dwd.user_id = #{userNo}
         AND DATE_FORMAT(dwd.work_date, '%Y-%m') = #{date}
     </select>
 
@@ -45,7 +45,7 @@
         SELECT COUNT(*)
         FROM ATTENDANCE_OPERATION ao
         JOIN USER u ON ao.user_id = u.user_id
-        WHERE ao.user_id = #{userId}
+        WHERE ao.user_id = #{userNo}
         AND DATE_FORMAT(ao.work_core_time, '%Y-%m') = #{date}
         AND ao.position_level_vacation > 0
     </select>
@@ -53,7 +53,7 @@
     <select id="existsAttendanceByParams" parameterType="com.commit.collaboration_board_server.model.Attendance" resultType="boolean">
         SELECT COUNT(*)
         FROM dailyWorkDate
-        WHERE userId = #{userId}
+        WHERE userNo = #{userNo}
         AND startTime = #{startTime}
         AND endTime = #{endTime}
     </select>

@@ -17,7 +17,7 @@ public interface ScheduleMapper {
     @Select("SELECT * FROM schedule")
     List<Schedule> findAllSchedules();
 
-    @Update("UPDATE schedule SET user_id = #{userId}, email = #{email}, title = #{title}, schedule_category = #{scheduleCategory}, " +
+    @Update("UPDATE schedule SET user_id = #{userNo}, email = #{email}, title = #{title}, schedule_category = #{scheduleCategory}, " +
             "description = #{description}, start_date = #{startDate}, end_date = #{endDate}, updated_at = NOW() WHERE id = #{id}")
     void updateSchedule(Schedule schedule);
 

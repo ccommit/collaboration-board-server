@@ -7,11 +7,11 @@
         INSERT INTO article (
         createTime, title, content, categoryId,
         attachmentUrl, viewCount, modificateTime,
-        likeCount, userId
+        likeCount, userNo
         ) VALUES (
         NOW(), #{title}, #{content}, #{categoryId},
         #{attachmentUrl}, #{viewCount}, #{modificateTime},
-        #{likeCount}, #{userId}
+        #{likeCount}, #{userNo}
         )
     </insert>
 
@@ -19,7 +19,7 @@
         SELECT
         id, createTime, title, content, categoryId,
         attachmentUrl, viewCount, modificateTime,
-        likeCount, userId
+        likeCount, userNo
         FROM article
         WHERE id = #{id}
     </select>
@@ -28,7 +28,7 @@
         SELECT
         id, createTime, title, content, categoryId,
         attachmentUrl, viewCount, modificateTime,
-        likeCount, userId
+        likeCount, userNo
         FROM article
         ORDER BY createTime DESC
     </select>
@@ -43,7 +43,7 @@
         modificateTime = NOW(),
         likeCount = #{likeCount},
         viewCount = #{viewCount},
-        userId = #{userId}
+        userNo = #{userNo}
         WHERE id = #{id}
     </update>
 

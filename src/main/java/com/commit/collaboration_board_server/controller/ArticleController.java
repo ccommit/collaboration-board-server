@@ -33,7 +33,7 @@ public class ArticleController {
 
     @PutMapping("/{id}")
     public ResponseEntity<?> updateArticle(@PathVariable int id, @RequestBody Article article) {
-        article.setId(id);
+        article.setUserNo(id);
         articleService.updateArticle(article);
         return ResponseEntity.ok().build();
     }

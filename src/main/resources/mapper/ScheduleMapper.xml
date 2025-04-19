@@ -6,8 +6,8 @@
 <mapper namespace="com.commit.collaboration_board_server.mapper.ScheduleMapper">
 
     <insert id="insertSchedule" useGeneratedKeys="true" keyProperty="id">
-        INSERT INTO schedule (userId, invitedEmails, title, isRegular, regularType, description, startDate, endDate, createdAt, updatedAt)
-        VALUES (#{userId}, #{invitedEmails, typeHandler=com.commit.collaboration_board_server.handler.JsonTypeHandler}, #{title}, #{isRegular}, #{regularType}, #{description}, #{startDate}, #{endDate}, NOW(), NOW())
+        INSERT INTO schedule (userNo, invitedEmails, title, isRegular, regularType, description, startDate, endDate, createdAt, updatedAt)
+        VALUES (#{userNo}, #{invitedEmails, typeHandler=com.commit.collaboration_board_server.handler.JsonTypeHandler}, #{title}, #{isRegular}, #{regularType}, #{description}, #{startDate}, #{endDate}, NOW(), NOW())
     </insert>
 
     <select id="getSchedulesByType" parameterType="string" resultType="com.commit.collaboration_board_server.model.Schedule">

@@ -5,6 +5,6 @@ import lombok.Data;
 @Data
 public class MonthlyWorkDate {
     private Long id;
-    private String userId;
+    private Long userNo;
     private Double totalWorkTime;
 }

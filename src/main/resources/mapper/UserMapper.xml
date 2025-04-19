@@ -9,12 +9,12 @@
     </select>
 
     <select id="findById" parameterType="Long" resultType="com.commit.collaboration_board_server.model.User">
-        SELECT * FROM USER WHERE id = #{id}
+        SELECT * FROM USER WHERE userNo = #{userNo}
     </select>
 
     <insert id="insertUser" parameterType="com.commit.collaboration_board_server.model.User">
-        INSERT INTO USER (id, userId, userName, password, phoneNumber, email, roleId, isAdmin, vacationCount)
-        VALUES (#{id}, #{userId}, #{userName}, #{password}, #{phoneNumber}, #{email}, #{roleId}, #{isAdmin, jdbcType=TINYINT}, #{vacationCount})
+        INSERT INTO USER (userNo, userId, userName, password, phoneNumber, email, roleId, isAdmin, vacationCount)
+        VALUES (#{userNo}, #{userId}, #{userName}, #{password}, #{phoneNumber}, #{email}, #{roleId}, #{isAdmin, jdbcType=TINYINT}, #{vacationCount})
     </insert>
 
     <update id="updateUser" parameterType="com.commit.collaboration_board_server.model.User">
@@ -25,17 +25,17 @@
             phone_number = #{phoneNumber},
             email = #{email},
             role = #{role}
-        WHERE id = #{id}
+        WHERE userNo = #{userNo}
     </update>
 
 
     <delete id="deleteUser" parameterType="Long">
-        DELETE FROM USER WHERE id = #{id}
+        DELETE FROM USER WHERE userNo = #{userNo}
     </delete>
 
-    <select id="findByUserId" parameterType="string" resultType="com.commit.collaboration_board_server.model.User">
-        SELECT id, userId, userName, password, phoneNumber, email, roleId, isAdmin, vacationCount
+    <select id="findByUserId" parameterType="Long" resultType="com.commit.collaboration_board_server.model.User">
+        SELECT userNo, userId, userName, password, phoneNumber, email, roleId, isAdmin, vacationCount
         FROM USER
-        WHERE userId = #{userId}
+        WHERE userNo = #{userNo}
     </select>
 </mapper>
