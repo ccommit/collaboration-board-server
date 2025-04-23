@@ -20,7 +20,6 @@ public class VacationService {
 
         // 상태는 강제 세팅
         vacation.setStatus("PENDING");
-
         vacationMapper.insertVacation(vacation);
     }
 

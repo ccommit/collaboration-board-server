@@ -17,10 +17,10 @@
     </select>
 
     <!-- UPDATE 휴가 상태 변경 -->
-    <update id="updateVacationStatus">
+    <update id="updateVacationStatus" parameterType="map">
         UPDATE vacation
         SET status = #{status}
-        WHERE id = #{vacationId}
+        WHERE id = #{id}
     </update>
 
     <!-- UPDATE 유저의 남은 휴가 일수 차감 -->
