@@ -1,8 +1,9 @@
 # collaboration-board-server
 네이버 웍스 같은 사내 게시판 협업 툴 서버
 
-# ERD
-![collaborationBoardServer](https://github.com/user-attachments/assets/56811ad8-41b3-4318-a4ea-d42dacf1c1b9)
+# ERD![Uploading collaborationBoardServer (2).png…]()
+
+![collaborationBoardServer (2)](https://github.com/user-attachments/assets/58006450-0f49-4215-981a-f7d4f12c0030)
 
 
 # 기획서
