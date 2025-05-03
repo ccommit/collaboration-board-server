@@ -14,7 +14,7 @@
 
     <insert id="insertUser" parameterType="com.commit.collaboration_board_server.model.User">
         INSERT INTO USER (id, userId, userName, password, phoneNumber, email, roleId, isAdmin, vacationCount)
-        VALUES (#{id}, #{userId}, #{userName}, #{password}, #{phoneNumber}, #{email}, #{roleId}, #{isAdmin}, #{vacationCount})
+        VALUES (#{id}, #{userId}, #{userName}, #{password}, #{phoneNumber}, #{email}, #{roleId}, #{isAdmin, jdbcType=TINYINT}, #{vacationCount})
     </insert>
 
     <update id="updateUser" parameterType="com.commit.collaboration_board_server.model.User">
@@ -33,7 +33,9 @@
         DELETE FROM USER WHERE id = #{id}
     </delete>
 
-    <select id="findByUserId" parameterType="com.commit.collaboration_board_server.model.User">
-        SELECT * FROM USER WHERE userId = #{userId}
+    <select id="findByUserId" parameterType="string" resultType="com.commit.collaboration_board_server.model.User">
+        SELECT id, userId, userName, password, phoneNumber, email, roleId, isAdmin, vacationCount
+        FROM USER
+        WHERE userId = #{userId}
     </select>
 </mapper>
