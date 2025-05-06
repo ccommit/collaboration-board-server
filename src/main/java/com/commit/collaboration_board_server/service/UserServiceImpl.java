@@ -59,7 +59,11 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void saveUserSession(HttpSession session, User loginRequest) {
-        SessionUtil.saveLoggedInUser(session, loginRequest);
+        User userFromDB = userMapper.findByUserId(loginRequest.getUserId());
+        if (userFromDB == null) {
+            throw new IllegalStateException("해당 사용자 정보를 찾을 수 없습니다.");
+        }
+        SessionUtil.saveLoggedInUser(session, userFromDB);
     }
 
     @Override

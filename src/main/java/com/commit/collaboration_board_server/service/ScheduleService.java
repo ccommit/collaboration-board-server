@@ -9,12 +9,14 @@ import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.List;
 
 @Service
 public class ScheduleService {
 
-    private JavaMailSender mailSender;
+    private final JavaMailSender mailSender;
     private final ScheduleMapper scheduleMapper;
 
     public ScheduleService(JavaMailSender mailSender, ScheduleMapper scheduleMapper) {
@@ -22,28 +24,36 @@ public class ScheduleService {
         this.scheduleMapper = scheduleMapper;
     }
 
+    @Scheduled(cron = "0 0 9 * * *") // 매일 오전 9시 실행
+    public void sendDailyInvitations() {
+        System.out.println("Schedule triggered at: " + LocalDateTime.now(ZoneId.of("Asia/Seoul")));
+        sendInvitationsByType("일간");
+    }
 
-    @Scheduled(cron = "0 0 0 * * MON")
+    @Scheduled(cron = "0 0 9 * * MON") // 매주 월요일 오전 9시 실행
     public void sendWeeklyInvitations() {
-        List<Schedule> schedules = scheduleMapper.getWeeklySchedules();
-        for (Schedule schedule : schedules) {
-            sendEmail(schedule);
-        }
+        sendInvitationsByType("주간");
     }
 
-    @Scheduled(cron = "0 0 0 1 * *")
+    @Scheduled(cron = "0 0 9 1 * *") // 매월 1일 오전 9시 실행
     public void sendMonthlyInvitations() {
-        List<Schedule> schedules = scheduleMapper.getMonthlySchedules();
+        sendInvitationsByType("월간");
+    }
+
+    private void sendInvitationsByType(String regularType) {
+        List<Schedule> schedules = scheduleMapper.getSchedulesByType(regularType);
         for (Schedule schedule : schedules) {
             sendEmail(schedule);
         }
     }
-
 
     private void sendEmail(Schedule schedule) {
-        String[] emailList = schedule.getInvitedEmails().split(",");
-
-        for (String email : emailList) {
+        List<String> invitedEmails = schedule.getInvitedEmails();
+        if (invitedEmails == null || invitedEmails.isEmpty()) {
+            System.out.println("No invited emails for schedule: " + schedule.getTitle());
+            return;
+        }
+        for (String email : invitedEmails) {
             try {
                 MimeMessage message = mailSender.createMimeMessage();
                 MimeMessageHelper helper = new MimeMessageHelper(message, true);
@@ -59,6 +69,7 @@ public class ScheduleService {
                 );
                 mailSender.send(message);
             } catch (MessagingException e) {
+                System.err.println("Email sending failed for " + email + ": " + e.getMessage());
                 e.printStackTrace();
             }
         }
@@ -69,27 +80,27 @@ public class ScheduleService {
 
 
     public void createSchedule(Schedule schedule) {
-        scheduleMapper.insertschedule(schedule);
+        scheduleMapper.insertSchedule(schedule);
     }
 
     public Schedule getScheduleById(Long id) {
-        return scheduleMapper.findscheduleById(id);
+        return scheduleMapper.findScheduleById(id);
     }
 
     public List<Schedule> getAllSchedules() {
-        return scheduleMapper.findAllschedules();
+        return scheduleMapper.findAllSchedules();
     }
 
 
     public void updateSchedule(Long id, Schedule updatedschedule) {
-        Schedule existingschedule = scheduleMapper.findscheduleById(id);
+        Schedule existingschedule = scheduleMapper.findScheduleById(id);
         if (existingschedule != null) {
             updatedschedule.setId(id);
-            scheduleMapper.updateschedule(updatedschedule);
+            scheduleMapper.updateSchedule(updatedschedule);
         }
     }
 
     public void deleteSchedule(Long id) {
-        scheduleMapper.deleteschedule(id);
+        scheduleMapper.deleteSchedule(id);
     }
 }

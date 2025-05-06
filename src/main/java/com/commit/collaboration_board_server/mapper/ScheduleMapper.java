@@ -9,20 +9,20 @@ import java.util.List;
 @Mapper
 public interface ScheduleMapper {
 
-    void insertschedule(Schedule schedule);
+    void insertSchedule(Schedule schedule);
 
     @Select("SELECT * FROM schedule WHERE id = #{id}")
-    Schedule findscheduleById(Long id);
+    Schedule findScheduleById(Long id);
 
     @Select("SELECT * FROM schedule")
-    List<Schedule> findAllschedules();
+    List<Schedule> findAllSchedules();
 
     @Update("UPDATE schedule SET user_id = #{userId}, email = #{email}, title = #{title}, schedule_category = #{scheduleCategory}, " +
             "description = #{description}, start_date = #{startDate}, end_date = #{endDate}, updated_at = NOW() WHERE id = #{id}")
-    void updateschedule(Schedule schedule);
+    void updateSchedule(Schedule schedule);
 
     @Delete("DELETE FROM schedule WHERE id = #{id}")
-    void deleteschedule(Long id);
+    void deleteSchedule(Long id);
 
     @Select("SELECT * FROM monthly_work_date WHERE total_work_time < #{hours}")
     List<MonthlyWorkDate> findByTotalWorkTimeLessThan(int hours);
@@ -36,4 +36,5 @@ public interface ScheduleMapper {
     @Select("SELECT * FROM schedule WHERE schedule_category = 'monthly' AND start_date > NOW()")
     List<Schedule> getMonthlySchedules();
 
+    List<Schedule> getSchedulesByType(@Param("regularType") String regularType);
 }
