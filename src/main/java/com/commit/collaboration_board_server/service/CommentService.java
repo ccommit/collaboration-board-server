@@ -21,25 +21,25 @@ public class CommentService {
     public List<Comment> getNestedCommentsByArticleId(int articleId) {
         List<Comment> comments = commentMapper.selectCommentsByArticleId(articleId);
 
-        // Map<id, comment> 구성
-        Map<Integer, Comment> commentMap = new HashMap<>();
-        List<Comment> rootComments = new ArrayList<>();
+//        // Map<id, comment> 구성
+//        Map<Integer, Comment> commentMap = new HashMap<>();
+//        List<Comment> rootComments = new ArrayList<>();
+//
+//        for (Comment comment : comments) {
+//            commentMap.put(comment.getId(), comment);
+//        }
+//
+//        for (Comment comment : comments) {
+//            if (comment.getCommentId() == null) {
+//                rootComments.add(comment);
+//            } else {
+//                Comment parent = commentMap.get(comment.getCommentId());
+//                if (parent != null) {
+//                    parent.getReplies().add(comment);
+//                }
+//            }
+//        }
 
-        for (Comment comment : comments) {
-            commentMap.put(comment.getId(), comment);
-        }
-
-        for (Comment comment : comments) {
-            if (comment.getCommentId() == null) {
-                rootComments.add(comment);
-            } else {
-                Comment parent = commentMap.get(comment.getCommentId());
-                if (parent != null) {
-                    parent.getReplies().add(comment);
-                }
-            }
-        }
-
-        return rootComments;
+        return comments;
     }
 }

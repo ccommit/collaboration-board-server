@@ -14,6 +14,4 @@ public class Comment {
     private String writer;
     private Integer commentId; // 부모 댓글 ID
     private Integer articleId;
-
-    private List<Comment> replies = new ArrayList<>(); // 대댓글 목록
 }

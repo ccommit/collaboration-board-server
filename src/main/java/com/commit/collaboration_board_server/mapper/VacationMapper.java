@@ -14,6 +14,7 @@ public interface VacationMapper {
 
     // 휴가 목록 조회 (개인/전체)
     List<Vacation> selectVacationsByUserNo(int userNo);
+
     List<Vacation> selectAllVacations();
 
     // 특정 휴가 상세 조회

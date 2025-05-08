@@ -15,4 +15,5 @@ public class Article {
     private LocalDateTime modificateTime;
     private Integer likeCount;
     private Integer userNo;
+    private String articleCategoryName;
 }

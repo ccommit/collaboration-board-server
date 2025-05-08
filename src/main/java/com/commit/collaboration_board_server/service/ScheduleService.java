@@ -8,13 +8,16 @@ import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
-
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.List;
 
 @Service
 public class ScheduleService {
+
+    private static final Logger logger = LoggerFactory.getLogger(ScheduleService.class);
 
     private final JavaMailSender mailSender;
     private final ScheduleMapper scheduleMapper;
@@ -26,7 +29,7 @@ public class ScheduleService {
 
     @Scheduled(cron = "0 0 9 * * *") // 매일 오전 9시 실행
     public void sendDailyInvitations() {
-        System.out.println("Schedule triggered at: " + LocalDateTime.now(ZoneId.of("Asia/Seoul")));
+        logger.info("Schedule triggered at: {} " ,LocalDateTime.now(ZoneId.of("Asia/Seoul")));
         sendInvitationsByType("일간");
     }
 
@@ -50,7 +53,7 @@ public class ScheduleService {
     private void sendEmail(Schedule schedule) {
         List<String> invitedEmails = schedule.getInvitedEmails();
         if (invitedEmails == null || invitedEmails.isEmpty()) {
-            System.out.println("No invited emails for schedule: " + schedule.getTitle());
+            logger.info("No invited emails for schedule: {} " ,schedule.getTitle());
             return;
         }
         for (String email : invitedEmails) {
@@ -69,7 +72,7 @@ public class ScheduleService {
                 );
                 mailSender.send(message);
             } catch (MessagingException e) {
-                System.err.println("Email sending failed for " + email + ": " + e.getMessage());
+                logger.warn("Email sending failed for {} : {} " ,email,e.getMessage());
                 e.printStackTrace();
             }
         }

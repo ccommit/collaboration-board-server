@@ -52,4 +52,9 @@
         WHERE id = #{id}
     </delete>
 
+    <insert id="insertArticleCategory" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO articlecategory (articleCategoryName)
+        VALUES (#{articleCategoryName})
+    </insert>
+
 </mapper>

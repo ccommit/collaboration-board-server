@@ -36,4 +36,8 @@ public class ArticleService {
     public void deleteArticle(int id) {
         articleMapper.deleteArticle(id);
     }
+
+    public void createCategory(Article article) {
+        articleMapper.insertArticleCategory(article);
+    }
 }

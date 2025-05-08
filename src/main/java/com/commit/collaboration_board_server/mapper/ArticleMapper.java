@@ -8,8 +8,14 @@ import java.util.List;
 @Mapper
 public interface ArticleMapper {
     void insertArticle(Article article);
+
     Article selectArticleById(@Param("id") int id);
+
     List<Article> selectAllArticles();
+
     void updateArticle(Article article);
+
     void deleteArticle(@Param("id") int id);
+
+    void insertArticleCategory(Article article);
 }

@@ -30,8 +30,6 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-aop'
 	implementation 'jakarta.servlet:jakarta.servlet-api:6.0.0' // Caused by: java.lang.ClassNotFoundException: jakarta.servlet.ServletInputStream 오류해결 20241224 kdong0712
 	implementation 'org.springframework.boot:spring-boot-starter-mail'
-	implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
-
 	implementation 'org.springframework.boot:spring-boot-starter-validation'
 	runtimeOnly 'com.mysql:mysql-connector-j'
 	compileOnly 'org.projectlombok:lombok'
