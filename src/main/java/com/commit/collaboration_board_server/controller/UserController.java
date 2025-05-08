@@ -1,5 +1,8 @@
 package com.commit.collaboration_board_server.controller;
 
+import com.commit.collaboration_board_server.aspect.AdminOnly;
+import com.commit.collaboration_board_server.aspect.CheckLoginStatus;
+import com.commit.collaboration_board_server.aspect.UserType;
 import com.commit.collaboration_board_server.model.User;
 import com.commit.collaboration_board_server.service.UserService;
 import com.commit.collaboration_board_server.util.ResponseStatusUtil;
@@ -49,12 +52,14 @@ public class UserController {
 
     // 특정 사용자 조회
     @GetMapping("/{id}")
-    public User getUserById(@PathVariable Long id) {
-        return userService.getUserById(id);
+    public User getUserNo(@PathVariable Long id) {
+        return userService.getUserNo(id);
     }
 
     // 사용자 생성
+
     @PostMapping
+    @CheckLoginStatus(userType = UserType.ADMIN)
     public void createUser(@RequestBody User user) {
         userService.createUser(user);
     }
@@ -62,7 +67,7 @@ public class UserController {
     // 사용자 수정
     @PutMapping("/{id}")
     public void updateUser(@PathVariable Long id, @RequestBody User user) {
-        user.setId(id);
+        user.setUserNo(id);
         userService.updateUser(user);
     }
 

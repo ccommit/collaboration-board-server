@@ -8,11 +8,11 @@ import java.util.List;
 
 public interface UserService {
     List<User> getAllUsers();
-    User getUserById(Long id);
+    User getUserNo(Long id);
     void createUser(User user);
     void updateUser(User user);
     void deleteUser(Long id);
-    User findByUserId(String userId);
+    User findByUserId(Long userNo);
     boolean authenticate(User loginRequest);
     void saveUserSession(HttpSession request, User loginRequest);
     void removeUserSession(HttpServletRequest request);
