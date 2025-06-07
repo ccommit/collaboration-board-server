@@ -4,28 +4,38 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.commit.collaboration_board_server.mapper.UserMapper">
 
-    <select id="findAll" resultType="com.commit.collaboration_board_server.model.User">
-        SELECT * FROM USER
+    <select id="findUsers" parameterType="Long">
+        SELECT *
+        FROM USER
+        <where>
+            <if test="userNo != null">
+                userNo = #{userNo}
+            </if>
+        </where>
     </select>
 
-    <select id="findById" parameterType="Long" resultType="com.commit.collaboration_board_server.model.User">
-        SELECT * FROM USER WHERE userNo = #{userNo}
-    </select>
-
-    <insert id="insertUser" parameterType="com.commit.collaboration_board_server.model.User">
-        INSERT INTO USER (userNo, userId, userName, password, phoneNumber, email, roleId, isAdmin, vacationCount)
-        VALUES (#{userNo}, #{userId}, #{userName}, #{password}, #{phoneNumber}, #{email}, #{roleId}, #{isAdmin, jdbcType=TINYINT}, #{vacationCount})
+    <insert id="insertUser" parameterType="com.commit.collaboration_board_server.dto.request.UserCreateRequest">
+        INSERT INTO USER
+                (userId,
+                userName,
+                password,
+                isAdmin)
+        VALUES
+                (#{userId},
+                #{userName},
+                #{password},
+                #{isAdmin})
     </insert>
 
     <update id="updateUser" parameterType="com.commit.collaboration_board_server.model.User">
         UPDATE USER
-        SET userId = #{userId},
-            userName = #{userName},
-            password = #{password},
-            phone_number = #{phoneNumber},
-            email = #{email},
-            role = #{role}
-        WHERE userNo = #{userNo}
+        SET    userid = # {userId},
+               username = # {userName},
+               password = # {password},
+               phone_number = # {phoneNumber},
+               email = # {email},
+               role = # {role}
+        WHERE  userNo = # {userNo}
     </update>
 
 

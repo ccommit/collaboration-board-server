@@ -1,5 +1,6 @@
 package com.commit.collaboration_board_server.service;
 
+import com.commit.collaboration_board_server.dto.request.UserCreateRequest;
 import com.commit.collaboration_board_server.mapper.UserMapper;
 import com.commit.collaboration_board_server.model.User;
 import com.commit.collaboration_board_server.util.SessionUtil;
@@ -21,17 +22,13 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<User> getAllUsers() {
-        return userMapper.findAll();
+    public List<User> getUsers(Long userNo) {
+        return userMapper.findUsers(userNo);
     }
 
-    @Override
-    public User getUserNo(Long id) {
-        return userMapper.findById(id);
-    }
 
     @Override
-    public void createUser(User user) {
+    public void createUser(UserCreateRequest user) {
         userMapper.insertUser(user);
     }
 
@@ -45,11 +42,6 @@ public class UserServiceImpl implements UserService {
         userMapper.deleteUser(id);
     }
 
-
-    @Override
-    public User findByUserId(Long userNo) {
-        return userMapper.findByUserId(userNo);
-    }
 
     @Override
     public boolean authenticate(User loginRequest) {

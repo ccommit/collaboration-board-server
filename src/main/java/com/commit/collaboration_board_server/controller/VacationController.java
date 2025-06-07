@@ -35,11 +35,7 @@ public class VacationController {
         return "휴가가 반려되었습니다.";
     }
 
-    // 4. 유저: 내 휴가 목록 조회
-    @GetMapping("/my/{userNo}")
-    public List<Vacation> getUserVacations(@PathVariable int userNo) {
-        return vacationService.getUserVacations(userNo);
-    }
+
 
     // 5. 관리자: 전체 휴가 목록 조회
     @GetMapping
