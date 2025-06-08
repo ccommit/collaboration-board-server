@@ -6,17 +6,39 @@
 <mapper namespace="com.commit.collaboration_board_server.mapper.ScheduleMapper">
 
     <insert id="insertSchedule" useGeneratedKeys="true" keyProperty="id">
-        INSERT INTO schedule (userNo, invitedEmails, title, isRegular, regularType, description, startDate, endDate, createdAt, updatedAt)
-        VALUES (#{userNo}, #{invitedEmails, typeHandler=com.commit.collaboration_board_server.handler.JsonTypeHandler}, #{title}, #{isRegular}, #{regularType}, #{description}, #{startDate}, #{endDate}, NOW(), NOW())
+        INSERT INTO schedule
+                    (userNo,
+                    invitedEmails,
+                    title,
+                    isRegular,
+                    regularType,
+                    description,
+                    startDate,
+                    endDate,
+                    createdAt,
+                    updatedAt)
+        VALUES
+                    (#{userNo},
+                    #{invitedEmails,typeHandler=com.commit.collaboration_board_server.handler.JsonTypeHandler},
+                    #{title},
+                    #{isRegular},
+                    #{regularType},
+                    #{description},
+                    #{startDate},
+                    #{endDate},
+                    NOW(),
+                    NOW())
     </insert>
 
     <select id="findScheduleById" parameterType="int" resultType="com.commit.collaboration_board_server.model.Schedule">
-        SELECT * FROM schedule
+        SELECT *
+        FROM schedule
         WHERE id = #{id}
     </select>
 
     <select id="findAllSchedules" resultType="com.commit.collaboration_board_server.model.Schedule">
-        SELECT * FROM schedule
+        SELECT *
+        FROM schedule
     </select>
 
     <update id="updateSchedule" parameterType="com.commit.collaboration_board_server.model.Schedule">
@@ -39,19 +61,22 @@
     </delete>
 
     <select id="getWeeklySchedules" parameterType="int" resultType="com.commit.collaboration_board_server.model.Schedule">
-        SELECT * FROM schedule
+        SELECT *
+        FROM schedule
         WHERE scheduleType = 'weekly'
         AND startDate > NOW()
     </select>
 
     <select id="getMonthlySchedules" parameterType="int" resultType="com.commit.collaboration_board_server.model.Schedule">
-        SELECT * FROM schedule
+        SELECT *
+        FROM schedule
         WHERE scheduleType = 'monthly'
         AND startDate > NOW()
     </select>
 
     <select id="getSchedulesByType" parameterType="string" resultType="com.commit.collaboration_board_server.model.Schedule">
-        SELECT * FROM schedule
+        SELECT *
+        FROM schedule
         WHERE regularType = #{regularType}
         AND startDate > NOW()
     </select>

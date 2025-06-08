@@ -6,8 +6,16 @@
 
     <!-- 일간 출석 체크 -->
     <insert id="insertAttendance" parameterType="com.commit.collaboration_board_server.model.Attendance">
-        INSERT INTO dailyWorkDate (userNo, startTime, workHour, workNotHour)
-        VALUES (#{userNo}, #{startTime}, #{workHour}, #{workNotHour})
+        INSERT INTO dailyWorkDate
+                    (userNo,
+                    startTime,
+                    workHour,
+                    workNotHour)
+        VALUES
+                    (#{userNo},
+                    #{startTime},
+                    #{workHour},
+                    #{workNotHour})
     </insert>
 
     <select id="existsUnfinishedAttendance" parameterType="Long" resultType="boolean">
@@ -26,7 +34,8 @@
 
 
     <select id="getAllWorkDates" resultType="com.commit.collaboration_board_server.model.Attendance">
-        SELECT * FROM dailyworkdate
+        SELECT *
+        FROM dailyworkdate
     </select>
 
 

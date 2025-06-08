@@ -7,16 +7,21 @@
 
     <!-- Insert a new role -->
     <insert id="insertRole" parameterType="com.commit.collaboration_board_server.model.Role" useGeneratedKeys="true" keyProperty="id">
-        INSERT INTO role (roleName, description, createdAt, updatedAt)
-        VALUES (#{roleName}, #{description}, NOW(), NOW())
+        INSERT INTO role
+                    (id,
+                    roleName,
+                    addVacationCount)
+        VALUES
+                    (#{id},
+                    #{roleName},
+                    #{addVacationCount})
     </insert>
 
     <!-- Update an existing role -->
-    <update id="updateRole" parameterType="com.commit.collaboration_board_server.model.Role">
+    <update id="updateRole" parameterType="map">
         UPDATE role
-        SET roleName = #{roleName},
-        description = #{description},
-        updatedAt = NOW()
+        SET roleName = #{role.roleName},
+        addVacationCount = #{role.addVacationCount}
         WHERE id = #{id}
     </update>
 
@@ -28,7 +33,8 @@
 
     <!-- Select a role by ID -->
     <select id="getRoleById" parameterType="long" resultType="com.commit.collaboration_board_server.model.Role">
-        SELECT * FROM role
+        SELECT *
+        FROM role
         WHERE id = #{id}
     </select>
 

@@ -40,11 +40,12 @@
 
 
     <delete id="deleteUser" parameterType="Long">
-        DELETE FROM USER WHERE userNo = #{userNo}
+        DELETE FROM USER
+        WHERE  userNo = #{userNo}
     </delete>
 
     <select id="findByUserId" parameterType="Long" resultType="com.commit.collaboration_board_server.model.User">
-        SELECT userNo, userId, userName, password, phoneNumber, email, roleId, isAdmin, vacationCount
+        SELECT *
         FROM USER
         WHERE userNo = #{userNo}
     </select>

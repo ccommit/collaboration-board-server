@@ -4,12 +4,23 @@
 <mapper namespace="com.commit.collaboration_board_server.mapper.CommentMapper">
 
     <insert id="insertComment" useGeneratedKeys="true" keyProperty="id">
-        INSERT INTO comment (content, createdDate, writer, commentId, articleId)
-        VALUES (#{content}, NOW(), #{writer}, #{commentId}, #{articleId})
+        INSERT INTO comment
+                    (content,
+                    createdDate,
+                    writer,
+                    commentId,
+                    articleId)
+        VALUES
+                    (#{content},
+                    NOW(),
+                    #{writer},
+                    #{commentId},
+                    #{articleId})
     </insert>
 
     <select id="selectCommentsByArticleId" resultType="com.commit.collaboration_board_server.model.Comment">
-        SELECT * FROM comment
+        SELECT *
+        FROM comment
         WHERE articleId = #{articleId}
         ORDER BY createdDate ASC
     </select>

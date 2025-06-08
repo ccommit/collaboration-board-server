@@ -1,27 +1,28 @@
 package com.commit.collaboration_board_server.controller;
 
+import com.commit.collaboration_board_server.dto.request.RoleUpsertRequest;
 import com.commit.collaboration_board_server.dto.request.UserCreateRequest;
+import com.commit.collaboration_board_server.model.Role;
 import com.commit.collaboration_board_server.model.User;
+import com.commit.collaboration_board_server.service.RoleService;
 import com.commit.collaboration_board_server.service.UserService;
 import com.commit.collaboration_board_server.util.ResponseStatusUtil;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
+import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@AllArgsConstructor
 @RestController
 @RequestMapping("/users")
 public class UserController {
 
     private final UserService userService;
-
-    @Autowired
-    public UserController(UserService userService) {
-        this.userService = userService;
-    }
+    private final RoleService roleService;
 
     @PostMapping("/login")
     public ResponseEntity<String> login(@RequestBody User loginRequest, HttpSession session) {
@@ -62,4 +63,18 @@ public class UserController {
     public void deleteUser(@PathVariable Long id) {
         userService.deleteUser(id);
     }
+
+    @PostMapping("/roles")
+    public String createRole(@RequestBody RoleUpsertRequest role) {
+        roleService.insertRole(role);
+        return "Role added successfully!";
+    }
+
+    @PostMapping("/roles/{id}")
+    public String updateRole(@PathVariable Long id, @RequestBody RoleUpsertRequest role) {
+        roleService.updateRole(id, role);
+        return "Role added successfully!";
+    }
+
+
 }

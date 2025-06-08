@@ -7,13 +7,25 @@
 
     <!-- INSERT 휴가 신청 -->
     <insert id="insertVacation" parameterType="com.commit.collaboration_board_server.model.Vacation" useGeneratedKeys="true" keyProperty="id">
-        INSERT INTO vacation (userNo, startTime, endTime, vacationCategoryId, status)
-        VALUES (#{userNo}, #{startTime}, #{endTime}, #{vacationCategoryId}, #{status})
+        INSERT INTO vacation
+                    (userNo,
+                    startTime,
+                    endTime,
+                    vacationCategoryId,
+                    status)
+        VALUES
+                    (#{userNo},
+                    #{startTime},
+                    #{endTime},
+                    #{vacationCategoryId},
+                    #{status})
     </insert>
 
     <!-- SELECT 단일 휴가 -->
     <select id="selectVacationById" parameterType="int" resultType="com.commit.collaboration_board_server.model.Vacation">
-        SELECT * FROM vacation WHERE id = #{vacationId}
+        SELECT *
+        FROM vacation
+        WHERE id = #{vacationId}
     </select>
 
     <!-- UPDATE 휴가 상태 변경 -->
@@ -32,12 +44,17 @@
 
     <!-- SELECT 특정 유저의 휴가 목록 -->
     <select id="selectVacationsByUserNo" parameterType="int" resultType="com.commit.collaboration_board_server.model.Vacation">
-        SELECT * FROM vacation WHERE userNo = #{userNo} ORDER BY startTime DESC
+        SELECT *
+        FROM vacation
+        WHERE userNo = #{userNo}
+        ORDER BY startTime DESC
     </select>
 
     <!-- SELECT 전체 휴가 목록 -->
     <select id="selectAllVacations" resultType="com.commit.collaboration_board_server.model.Vacation">
-        SELECT * FROM vacation ORDER BY startTime DESC
+        SELECT *
+        FROM vacation
+        ORDER BY startTime DESC
     </select>
 
 </mapper>
