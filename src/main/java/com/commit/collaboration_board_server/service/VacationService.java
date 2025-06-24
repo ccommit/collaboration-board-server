@@ -27,12 +27,12 @@ public class VacationService {
         Vacation vacation = vacationMapper.selectVacationById(vacationId);
         int days = (int) ChronoUnit.DAYS.between(vacation.getStartTime(), vacation.getEndTime()) + 1;
 
-        vacationMapper.updateVacationStatus(vacationId, "APPROVED");
+        vacationMapper.updateVacationStatus(vacationId, VacationStatus.APPROVED.name());
         vacationMapper.decrementVacationCount(vacation.getUserNo(), days);
     }
 
     public void rejectVacation(int vacationId) {
-        vacationMapper.updateVacationStatus(vacationId, "REJECTED");
+        vacationMapper.updateVacationStatus(vacationId, VacationStatus.REJECTED.name());
     }
 
     public List<Vacation> getUserVacations(int userNo) {
