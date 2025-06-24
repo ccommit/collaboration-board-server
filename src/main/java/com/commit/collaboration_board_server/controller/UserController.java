@@ -4,8 +4,10 @@ import com.commit.collaboration_board_server.dto.request.RoleUpsertRequest;
 import com.commit.collaboration_board_server.dto.request.UserCreateRequest;
 import com.commit.collaboration_board_server.model.Role;
 import com.commit.collaboration_board_server.model.User;
+import com.commit.collaboration_board_server.model.Vacation;
 import com.commit.collaboration_board_server.service.RoleService;
 import com.commit.collaboration_board_server.service.UserService;
+import com.commit.collaboration_board_server.service.VacationService;
 import com.commit.collaboration_board_server.util.ResponseStatusUtil;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
@@ -23,6 +25,7 @@ public class UserController {
 
     private final UserService userService;
     private final RoleService roleService;
+    private final VacationService vacationService;
 
     @PostMapping("/login")
     public ResponseEntity<String> login(@RequestBody User loginRequest, HttpSession session) {
@@ -76,5 +79,23 @@ public class UserController {
         return "Role added successfully!";
     }
 
-
+    @PostMapping("/vacations")
+    public String applyVacation(@RequestBody Vacation vacation) {
+        vacationService.applyVacation(vacation);
+        return "휴가 신청이 완료되었습니다.";
+    }
+    @PostMapping("/vacations/{vacationId}/approve")
+    public String approveVacation(@PathVariable int vacationId) {
+        vacationService.approveVacation(vacationId);
+        return "휴가가 승인되었습니다.";
+    }
+    @PostMapping("/vacations/{vacationId}/reject")
+    public String rejectVacation(@PathVariable int vacationId) {
+        vacationService.rejectVacation(vacationId);
+        return "휴가가 반려되었습니다.";
+    }
+    @GetMapping("/vacations")
+    public List<Vacation> getAllVacations() {
+        return vacationService.getAllVacations();
+    }
 }
