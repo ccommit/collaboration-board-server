@@ -5,9 +5,83 @@
 
 <mapper namespace="com.commit.collaboration_board_server.mapper.ScheduleMapper">
 
-    <insert id="insertschedule" useGeneratedKeys="true" keyProperty="id">
-        INSERT INTO schedule (user_id, email, title, schedule_category, description, start_date, end_date, created_at, updated_at)
-        VALUES (#{userId}, #{invitedEmails}, #{title}, #{scheduleCategory}, #{description}, #{startDate}, #{endDate}, NOW(), NOW())
+    <insert id="insertSchedule" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO schedule
+                    (userNo,
+                    invitedEmails,
+                    title,
+                    isRegular,
+                    regularType,
+                    description,
+                    startDate,
+                    endDate,
+                    createdAt,
+                    updatedAt)
+        VALUES
+                    (#{userNo},
+                    #{invitedEmails,typeHandler=com.commit.collaboration_board_server.handler.JsonTypeHandler},
+                    #{title},
+                    #{isRegular},
+                    #{regularType},
+                    #{description},
+                    #{startDate},
+                    #{endDate},
+                    NOW(),
+                    NOW())
     </insert>
+
+    <select id="findScheduleById" parameterType="int" resultType="com.commit.collaboration_board_server.model.Schedule">
+        SELECT *
+        FROM schedule
+        WHERE id = #{id}
+    </select>
+
+    <select id="findAllSchedules" resultType="com.commit.collaboration_board_server.model.Schedule">
+        SELECT *
+        FROM schedule
+    </select>
+
+    <update id="updateSchedule" parameterType="com.commit.collaboration_board_server.model.Schedule">
+        UPDATE schedule
+        SET userNo = #{userNo},
+            invitedEmails = #{invitedEmails, typeHandler=com.commit.collaboration_board_server.handler.JsonTypeHandler},
+            title = #{title},
+            isRegular = #{isRegular},
+            regularType = #{regularType},
+            description = #{description},
+            startDate = #{startDate},
+            endDate = #{endDate},
+            updatedAt = NOW()
+        WHERE id = #{id}
+    </update>
+
+    <delete id="deleteSchedule" parameterType="int">
+        DELETE FROM schedule
+        WHERE id = #{id}
+    </delete>
+
+    <select id="getWeeklySchedules" parameterType="int" resultType="com.commit.collaboration_board_server.model.Schedule">
+        SELECT *
+        FROM schedule
+        WHERE scheduleType = 'weekly'
+            AND startDate > NOW()
+    </select>
+
+    <select id="getMonthlySchedules" parameterType="int" resultType="com.commit.collaboration_board_server.model.Schedule">
+        SELECT *
+        FROM schedule
+        WHERE scheduleType = 'monthly'
+            AND startDate > NOW()
+    </select>
+
+    <select id="getSchedulesByType" parameterType="string" resultType="com.commit.collaboration_board_server.model.Schedule">
+        SELECT *
+        FROM schedule
+        WHERE regularType = #{regularType}
+            AND startDate > NOW()
+    </select>
+
+
+
 
 </mapper>

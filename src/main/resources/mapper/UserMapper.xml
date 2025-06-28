@@ -4,36 +4,49 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.commit.collaboration_board_server.mapper.UserMapper">
 
-    <select id="findAll" resultType="com.commit.collaboration_board_server.model.User">
-        SELECT * FROM USER
+    <select id="findUsers" parameterType="Long">
+        SELECT *
+        FROM USER
+        <where>
+            <if test="userNo != null">
+                userNo = #{userNo}
+            </if>
+        </where>
     </select>
 
-    <select id="findById" parameterType="Long" resultType="com.commit.collaboration_board_server.model.User">
-        SELECT * FROM USER WHERE id = #{id}
-    </select>
-
-    <insert id="insertUser" parameterType="com.commit.collaboration_board_server.model.User">
-        INSERT INTO USER (id, userId, userName, password, phoneNumber, email, roleId, isAdmin, vacationCount)
-        VALUES (#{id}, #{userId}, #{userName}, #{password}, #{phoneNumber}, #{email}, #{roleId}, #{isAdmin}, #{vacationCount})
+    <insert id="insertUser" parameterType="com.commit.collaboration_board_server.dto.request.UserCreateRequest">
+        INSERT INTO USER
+                (userId,
+                userName,
+                password,
+                isAdmin)
+        VALUES
+                (#{userId},
+                #{userName},
+                #{password},
+                #{isAdmin})
     </insert>
 
     <update id="updateUser" parameterType="com.commit.collaboration_board_server.model.User">
         UPDATE USER
-        SET userId = #{userId},
-            userName = #{userName},
-            password = #{password},
-            phone_number = #{phoneNumber},
-            email = #{email},
-            role = #{role}
-        WHERE id = #{id}
+        SET    userid = # {userId},
+               username = # {userName},
+               password = # {password},
+               phone_number = # {phoneNumber},
+               email = # {email},
+               role = # {role}
+        WHERE  userNo = # {userNo}
     </update>
 
 
     <delete id="deleteUser" parameterType="Long">
-        DELETE FROM USER WHERE id = #{id}
+        DELETE FROM USER
+        WHERE  userNo = #{userNo}
     </delete>
 
-    <select id="findByUserId" parameterType="com.commit.collaboration_board_server.model.User">
-        SELECT * FROM USER WHERE userId = #{userId}
+    <select id="findByUserId" parameterType="Long" resultType="com.commit.collaboration_board_server.model.User">
+        SELECT *
+        FROM USER
+        WHERE userNo = #{userNo}
     </select>
 </mapper>

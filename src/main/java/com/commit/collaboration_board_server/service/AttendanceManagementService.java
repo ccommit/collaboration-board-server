@@ -53,7 +53,7 @@ public class AttendanceManagementService {
 
         // 코어타임을 기준으로 근무 시작 시간이 10:00 ~ 14:00 사이에 있지 않으면
         if (isCoreTime(startTime)) {
-            User user =  userMapper.findByUserId(attendance.getUserId());
+            User user =  userMapper.findByUserId(attendance.getUserNo());
             String penaltyMessage = "Core time violation: worked outside core time (10:00 - 14:00)";
             emailService.sendEmail(user.getEmail(), penaltyMessage, penaltyMessage);
 
@@ -61,7 +61,7 @@ public class AttendanceManagementService {
 
 
         // 퇴근하지 않으면 저장 안되게
-        boolean hasUnfinishedAttendance = attendanceMapper.existsUnfinishedAttendance(attendance.getUserId());
+        boolean hasUnfinishedAttendance = attendanceMapper.existsUnfinishedAttendance(attendance.getUserNo());
         if (!hasUnfinishedAttendance)
             attendanceMapper.insertAttendance(attendance);
         return ResponseStatusUtil.CODES_SUCCESS;
@@ -86,13 +86,13 @@ public class AttendanceManagementService {
 
 
 
-    public Map<String, Object> getMonthlyAttendanceInfo(String userId, Date date) {
+    public Map<String, Object> getMonthlyAttendanceInfo(long userNo, Date date) {
         Map<String, Object> result = new HashMap<>();
 
-        int monthlyWorkHours = attendanceMapper.getMonthlyWorkHours(userId, date);
+        int monthlyWorkHours = attendanceMapper.getMonthlyWorkHours(userNo, date);
         result.put("monthlyWorkHours", monthlyWorkHours);
 
-        int coreTimeViolations = attendanceMapper.getCoreTimeViolations(userId, date);
+        int coreTimeViolations = attendanceMapper.getCoreTimeViolations(userNo, date);
         result.put("coreTimeViolations", coreTimeViolations);
 
         int penaltyPoints = coreTimeViolations / 3;

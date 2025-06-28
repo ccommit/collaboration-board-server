@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.commit.collaboration_board_server.mapper.ArticleMapper">
+    <insert id="insertArticle" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO article
+                (createTime,
+                title,
+                content,
+                categoryId,
+                attachmentUrl,
+                viewCount,
+                modificateTime,
+                likeCount,
+                userNo )
+        VALUES
+                (NOW(),
+                #{title},
+                #{content},
+                #{categoryId},
+                #{attachmentUrl},
+                #{viewCount},
+                #{modificateTime},
+                #{likeCount},
+                #{userNo} )
+    </insert>
+
+    <select id="selectArticleById" resultType="com.commit.collaboration_board_server.model.Article">
+        SELECT *
+        FROM article
+        WHERE id = #{id}
+    </select>
+
+    <select id="selectAllArticles" resultType="com.commit.collaboration_board_server.model.Article">
+        SELECT *
+        FROM article
+        ORDER BY createTime DESC
+    </select>
+
+    <update id="updateArticle">
+        UPDATE  article
+        SET     title = #{title},
+                content = #{content},
+                categoryId = #{categoryId},
+                attachmentUrl = #{attachmentUrl},
+                modificateTime = NOW(),
+                likeCount = #{likeCount},
+                viewCount = #{viewCount},
+                userNo = #{userNo}
+        WHERE   id = #{id}
+    </update>
+
+    <delete id="deleteArticle">
+        DELETE FROM article
+        WHERE id = #{id}
+    </delete>
+
+    <insert id="insertArticleCategory" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO articlecategory
+                    (articleCategoryName)
+        VALUES      (#{articleCategoryName})
+    </insert>
+
+</mapper>

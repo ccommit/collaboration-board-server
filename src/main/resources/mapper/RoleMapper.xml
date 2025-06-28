@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.commit.collaboration_board_server.mapper.RoleMapper">
+
+    <!-- Insert a new role -->
+    <insert id="insertRole" parameterType="com.commit.collaboration_board_server.model.Role" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO role
+                    (id,
+                    roleName,
+                    addVacationCount)
+        VALUES
+                    (#{id},
+                    #{roleName},
+                    #{addVacationCount})
+    </insert>
+
+    <!-- Update an existing role -->
+    <update id="updateRole" parameterType="map">
+        UPDATE role
+        SET roleName = #{role.roleName},
+            addVacationCount = #{role.addVacationCount}
+        WHERE id = #{id}
+    </update>
+
+    <!-- Delete a role by ID -->
+    <delete id="deleteRoleById" parameterType="long">
+        DELETE FROM role
+        WHERE id = #{id}
+    </delete>
+
+    <!-- Select a role by ID -->
+    <select id="getRoleById" parameterType="long" resultType="com.commit.collaboration_board_server.model.Role">
+        SELECT *
+        FROM role
+        WHERE id = #{id}
+    </select>
+
+
+</mapper>

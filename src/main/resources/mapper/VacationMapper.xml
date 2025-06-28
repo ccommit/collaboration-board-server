@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.commit.collaboration_board_server.mapper.VacationMapper">
+
+    <!-- INSERT 휴가 신청 -->
+    <insert id="insertVacation" parameterType="com.commit.collaboration_board_server.model.Vacation" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO vacation
+                    (userNo,
+                    startTime,
+                    endTime,
+                    vacationCategoryId,
+                    status)
+        VALUES
+                    (#{userNo},
+                    #{startTime},
+                    #{endTime},
+                    #{vacationCategoryId},
+                    #{status})
+    </insert>
+
+    <!-- SELECT 단일 휴가 -->
+    <select id="selectVacationById" parameterType="int" resultType="com.commit.collaboration_board_server.model.Vacation">
+        SELECT *
+        FROM vacation
+        WHERE id = #{vacationId}
+    </select>
+
+    <!-- UPDATE 휴가 상태 변경 -->
+    <update id="updateVacationStatus" parameterType="map">
+        UPDATE vacation
+        SET status = #{status}
+        WHERE id = #{id}
+    </update>
+
+    <!-- UPDATE 유저의 남은 휴가 일수 차감 -->
+    <update id="decrementVacationCount">
+        UPDATE user
+        SET vacationCount = vacationCount - #{days}
+        WHERE userNo = #{userNo}
+    </update>
+
+    <!-- SELECT 특정 유저의 휴가 목록 -->
+    <select id="selectVacationsByUserNo" parameterType="int" resultType="com.commit.collaboration_board_server.model.Vacation">
+        SELECT *
+        FROM vacation
+        WHERE userNo = #{userNo}
+        ORDER BY startTime DESC
+    </select>
+
+    <!-- SELECT 전체 휴가 목록 -->
+    <select id="selectAllVacations" resultType="com.commit.collaboration_board_server.model.Vacation">
+        SELECT *
+        FROM vacation
+        ORDER BY startTime DESC
+    </select>
+
+</mapper>

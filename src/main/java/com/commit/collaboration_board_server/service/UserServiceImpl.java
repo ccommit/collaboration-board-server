@@ -1,5 +1,6 @@
 package com.commit.collaboration_board_server.service;
 
+import com.commit.collaboration_board_server.dto.request.UserCreateRequest;
 import com.commit.collaboration_board_server.mapper.UserMapper;
 import com.commit.collaboration_board_server.model.User;
 import com.commit.collaboration_board_server.util.SessionUtil;
@@ -21,17 +22,13 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<User> getAllUsers() {
-        return userMapper.findAll();
+    public List<User> getUsers(Long userNo) {
+        return userMapper.findUsers(userNo);
     }
 
-    @Override
-    public User getUserById(Long id) {
-        return userMapper.findById(id);
-    }
 
     @Override
-    public void createUser(User user) {
+    public void createUser(UserCreateRequest user) {
         userMapper.insertUser(user);
     }
 
@@ -47,19 +44,18 @@ public class UserServiceImpl implements UserService {
 
 
     @Override
-    public User findByUserId(String userId) {
-        return userMapper.findByUserId(userId);
-    }
-
-    @Override
     public boolean authenticate(User loginRequest) {
-        User user = userMapper.findByUserId(loginRequest.getUserId());
+        User user = userMapper.findByUserId(loginRequest.getUserNo());
         return user != null && user.getPassword().equals(loginRequest.getPassword());
     }
 
     @Override
     public void saveUserSession(HttpSession session, User loginRequest) {
-        SessionUtil.saveLoggedInUser(session, loginRequest);
+        User userFromDB = userMapper.findByUserId(loginRequest.getUserNo());
+        if (userFromDB == null) {
+            throw new IllegalStateException("해당 사용자 정보를 찾을 수 없습니다.");
+        }
+        SessionUtil.saveLoggedInUser(session, userFromDB);
     }
 
     @Override
