@@ -64,21 +64,21 @@
         SELECT *
         FROM schedule
         WHERE scheduleType = 'weekly'
-        AND startDate > NOW()
+            AND startDate > NOW()
     </select>
 
     <select id="getMonthlySchedules" parameterType="int" resultType="com.commit.collaboration_board_server.model.Schedule">
         SELECT *
         FROM schedule
         WHERE scheduleType = 'monthly'
-        AND startDate > NOW()
+            AND startDate > NOW()
     </select>
 
     <select id="getSchedulesByType" parameterType="string" resultType="com.commit.collaboration_board_server.model.Schedule">
         SELECT *
         FROM schedule
         WHERE regularType = #{regularType}
-        AND startDate > NOW()
+            AND startDate > NOW()
     </select>
 
 

@@ -21,7 +21,7 @@
     <update id="updateRole" parameterType="map">
         UPDATE role
         SET roleName = #{role.roleName},
-        addVacationCount = #{role.addVacationCount}
+            addVacationCount = #{role.addVacationCount}
         WHERE id = #{id}
     </update>
 
