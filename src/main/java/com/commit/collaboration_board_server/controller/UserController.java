@@ -2,6 +2,9 @@ package com.commit.collaboration_board_server.controller;
 
 import com.commit.collaboration_board_server.dto.request.RoleUpsertRequest;
 import com.commit.collaboration_board_server.dto.request.UserCreateRequest;
+import com.commit.collaboration_board_server.dto.request.VacationRequest;
+import com.commit.collaboration_board_server.dto.response.RoleUpsertResponse;
+import com.commit.collaboration_board_server.dto.response.VacationResponse;
 import com.commit.collaboration_board_server.model.Role;
 import com.commit.collaboration_board_server.model.User;
 import com.commit.collaboration_board_server.model.Vacation;
@@ -68,21 +71,22 @@ public class UserController {
     }
 
     @PostMapping("/roles")
-    public String createRole(@RequestBody RoleUpsertRequest role) {
-        roleService.insertRole(role);
-        return "Role added successfully!";
+    public ResponseEntity<RoleUpsertResponse> createRole(@RequestBody RoleUpsertRequest role) {
+        RoleUpsertResponse response = roleService.insertRole(role);
+        return ResponseEntity.ok().body(response);
     }
 
-    @PostMapping("/roles/{id}")
-    public String updateRole(@PathVariable Long id, @RequestBody RoleUpsertRequest role) {
-        roleService.updateRole(id, role);
-        return "Role added successfully!";
-    }
+//    @PutMapping("/roles/{id}")
+//    public String updateRole(@PathVariable Long id, @RequestBody RoleUpsertRequest role) {
+//        roleService.updateRole(id, role);
+//        return "Role added successfully!";
+//    }
 
     @PostMapping("/vacations")
-    public String applyVacation(@RequestBody Vacation vacation) {
-        vacationService.applyVacation(vacation);
-        return "휴가 신청이 완료되었습니다.";
+    public ResponseEntity<VacationResponse> applyVacation(@RequestBody VacationRequest request) {
+        Vacation vacation= vacationService.applyVacation(request);
+        VacationResponse response = vacationService.toResponse(vacation);
+        return ResponseEntity.ok().body(response);
     }
     @PostMapping("/vacations/{vacationId}/approve")
     public String approveVacation(@PathVariable int vacationId) {

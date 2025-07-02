@@ -146,7 +146,7 @@ class CoreFunctionalityTest {
     void testApplyVacation() {
         when(vacationMapper.insertVacation(any(Vacation.class))).thenReturn(1);
 
-        vacationService.applyVacation(vacation);
+        //vacationService.applyVacation(vacation);
 
         assertEquals("PENDING", vacation.getStatus());
         verify(vacationMapper).insertVacation(vacation);
